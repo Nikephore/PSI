@@ -6,6 +6,7 @@ from django.urls import reverse
 import uuid
 from django.contrib.auth.models import User
 from datetime import date
+from django.template.defaultfilters import slugify
 
 
 class Author(models.Model):
@@ -14,6 +15,10 @@ class Author(models.Model):
 
     def __str__(self):
         return self.first_name + " " + self.last_name
+
+
+    def get_absolute_url(self):
+        return slugify(self.first_name+" "+self.last_name+" "+self.pk)
 
 
 class Book(models.Model):
@@ -30,6 +35,9 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return self.slug
 
 
 

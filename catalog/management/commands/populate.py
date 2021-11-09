@@ -77,8 +77,6 @@ class Command(BaseCommand):
     def user(self):
         " Insert users"
         # remove pass and ADD CODE HERE
-        for _ in range(self.NUMBERUSERS):
-            n = faker.unique.
         
 
     def author(self):
@@ -115,7 +113,7 @@ class Command(BaseCommand):
             isbn = faker.unique.numerify("#############")
             p = faker.random_double()
             # ptci = faker.unique.path
-            c = faker.unique.random_int()
+            c = faker.unique.random_int(self.MAXCOPIESSTOCK)
             d = faker.unique.
             s = faker.random_double()
             sl = t # al ser solo una palabra no se distingue
