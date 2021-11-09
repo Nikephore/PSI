@@ -9,7 +9,6 @@ from datetime import date
 
 
 class Author(models.Model):
-    author_id = models.IntegerField(primary_key= True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
@@ -18,7 +17,6 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    book_id = models.IntegerField(primary_key= True)
     isbn = models.CharField('ISBN', max_length=13, help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     title = models.CharField(max_length=200)
     price = models.DecimalField()
@@ -36,10 +34,9 @@ class Book(models.Model):
 
 
 class Comment(models.Model):
-    comment_id = models.IntegerField(primary_key= True)
     book_id = ForeignKey(Book, on_delete=models.SET_NULL)
     user_id = ForeignKey(User, on_delete=models.SET_NULL)
-    date = models.DateField()
+    date = models.DateTimeField()
     msg = models.CharField(max_length=500)
 
     def __str__(self):
