@@ -25,13 +25,23 @@ class Book(models.Model):
     score = models.DecimalField()
     slug = models.SlugField()
 
+class AuthorBook(models.Model): 
+    book_id = ForeignKey(Book, on_delete=models.SET_NULL)
+    author_id = ForeignKey(Author, on_delete=models.SET_NULL)
+
+    class Meta:
+        unique_together = ('book_id', 'author_id')
+
+
 
 class Comment(models.Model):
     comment_id = models.IntegerField(primary_key= True)
     book_id = ForeignKey(Book, on_delete=models.SET_NULL)
-    user_id = 
-    date
-    msg 
+    user_id = ForeignKey(Book, on_delete=models.SET_NULL)
+    date = models.DateField()
+    msg = models.CharField(max_length=500)
+
+
 
 
 
