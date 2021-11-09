@@ -19,13 +19,13 @@ class Author(models.Model):
 class Book(models.Model):
     isbn = models.CharField('ISBN', max_length=13, help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     title = models.CharField(max_length=200)
-    price = models.DecimalField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     path_to_cover_image = models.FilePathField()
-    number_of_copies_stock = models.IntegerField()
-    date = models.DateField()
-    score = models.DecimalField()
+    number_copies_stock = models.IntegerField()
+    date = models.DateField(null=True)
+    score = models.DecimalField(max_digits=4, decimal_places=2)
     slug = models.SlugField()
-    author_book = models.ManyToManyField(Author, help_text="Introduzca un autor para este libro")
+    author = models.ManyToManyField(Author, help_text="Introduzca un autor para este libro")
 
 
     def __str__(self):
@@ -34,9 +34,9 @@ class Book(models.Model):
 
 
 class Comment(models.Model):
-    book_id = ForeignKey(Book, on_delete=models.SET_NULL)
-    user_id = ForeignKey(User, on_delete=models.SET_NULL)
-    date = models.DateTimeField()
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    date = models.DateTimeField(null=True)
     msg = models.CharField(max_length=500)
 
     def __str__(self):
