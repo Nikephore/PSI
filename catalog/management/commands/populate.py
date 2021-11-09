@@ -77,12 +77,17 @@ class Command(BaseCommand):
     def user(self):
         " Insert users"
         # remove pass and ADD CODE HERE
-        pass
+        for _ in range(self.NUMBERUSERS):
+            n = faker.unique.
+        
 
     def author(self):
         " Insert authors"
-        # remove pass and ADD CODE HERE
-        pass
+        for _ in range(self.NUMBERAUTHORS):
+            fn = faker.unique.first_name()
+            ln = faker.unique.last_name()
+            new_author = Author(first_name=fn, last_name=ln)
+            new_author.save()
 
     def cover(self, book):
         """create fake cover image.
@@ -105,7 +110,18 @@ class Command(BaseCommand):
     def book(self):
         " Insert books"
         # remove pass and ADD CODE HERE
-        pass
+        for _ in range(self.NUMBERBOOKS):
+            t = faker.unique.word()
+            isbn = faker.unique.numerify("#############")
+            p = faker.random_double()
+            # ptci = faker.unique.path
+            c = faker.unique.random_int()
+            d = faker.unique.
+            s = faker.random_double()
+            sl = t # al ser solo una palabra no se distingue
+
+        
+
 
     def comment(self):
         " Insert comments"
