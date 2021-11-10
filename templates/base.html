@@ -13,6 +13,8 @@
       {% block menu %}
       
       <a href="#"> Cart</a>
+      <a href="{% url 'login' %}?next={{request.path}}">Login</a>
+      
       <hr>
       {% endblock %}
       {% block content %}
