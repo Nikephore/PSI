@@ -13,7 +13,6 @@
       {% block menu %}
       
       <a href="#"> Cart</a>
-<<<<<<< HEAD
       {% if user.is_authenticated %}
          <a href="{% url 'logout' %}?next={{request.path}}">Logout</a>
       {% else %}
@@ -22,9 +21,6 @@
       {% endif %}
       
       
-=======
-      <a href="{% url 'login' %}">Login</a>
->>>>>>> 443ab4d7131057fd271814b51e32e8d1eef97072
       
       <hr>
       {% endblock %}
