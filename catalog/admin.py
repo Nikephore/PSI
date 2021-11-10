@@ -1,5 +1,7 @@
-from django.apps import AppConfig
+from django.contrib import admin
 
-class CatalogConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'catalog'
+from .models import Author,  Book, Comment
+
+admin.site.register(Book)
+admin.site.register(Author)
+admin.site.register(Comment)
