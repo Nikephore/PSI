@@ -3,21 +3,22 @@
 {% block content %}
   <h1>Title: {{ book.title }}</h1>
 
-  <p><strong>Author:</strong> 
   <p><strong>Summary:</strong> {{ book.title }}</p>
   <p><strong>ISBN:</strong> {{ book.isbn }}</p>
   <p><strong>Price:</strong> {{ book.price }}</p>
-  <p><strong>Author:</strong> {% for Author in book.author.all %} {{ author }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <p><strong>Number of copies:</strong> {{ book.number_copies_stock }}</p>
+  <p><strong>Image:</strong> {{ book.path_to_cover_image }}</p>
+  <p><strong>Author/s:</strong> {% for author in book.author.all %} {{ author }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Copies</h4>
+  <div>
+    <h4>Comments</h4>
 
-    {% for copy in book.bookinstance_set.all %}
+    {% for com in book.comment_set.all %}
     <hr>
-    <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
-    {% if copy.status != 'a' %}<p><strong>Due to be returned:</strong> {{copy.due_back}}</p>{% endif %}
-    <p><strong>Imprint:</strong> {{copy.imprint}}</p>
-    <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
+    <p><strong>User:</strong> {{ com.user }}</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ com.msg }}</p>
+    
     {% endfor %}
   </div>
+  
 {% endblock %}

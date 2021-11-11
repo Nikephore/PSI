@@ -119,7 +119,8 @@ class Command(BaseCommand):
             d = self.faker.date()
             s = float(decimal.Decimal(random.randrange(100, 999))/100)
             sl = t # al ser solo una palabra no se distingue
-            new_book = Book(isbn=isbn, title=t, price=p, path_to_cover_image='', number_copies_stock=c, date=d, score=s, slug=t)
+            new_book = Book(isbn=isbn, title=t, price=p, number_copies_stock=c, date=d, score=s, slug=t)
+            self.cover(self, new_book)
             new_book.save()
        
 

@@ -31,3 +31,8 @@ def BookDetailView(request, slug):
 class BookListView(generic.ListView):
     model = Book
     paginate_by = 5
+
+
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by = 5

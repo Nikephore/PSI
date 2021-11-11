@@ -18,14 +18,14 @@ class Author(models.Model):
 
 
     def get_absolute_url(self):
-        return slugify(self.first_name+" "+self.last_name+" "+self.pk)
+        return slugify(self.first_name+" "+self.last_name+" "+str(self.pk))
 
 
 class Book(models.Model):
-    isbn = models.CharField('ISBN', max_length=13, help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
+    isbn = models.CharField('ISBN', max_length=13, help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>', unique=True)
     title = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    path_to_cover_image = models.FilePathField()
+    path_to_cover_image = models.ImageField()
     number_copies_stock = models.IntegerField()
     date = models.DateField(null=True)
     score = models.DecimalField(max_digits=4, decimal_places=2)
@@ -37,11 +37,14 @@ class Book(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug=slugify(self.title)
+        #Para permitir titulos de libros repetidos
+        self.slug=slugify(self.title+' '+str(self.pk))
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.slug)])
+
+    
 
 
 class Comment(models.Model):

@@ -3,11 +3,6 @@ from django.contrib import admin
 from .models import Author, Book, Comment
 
 
-class BooksInline(admin.TabularInline):
-    model = Book
-    extra = 0
-
-
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('last_name', 'first_name')
 
@@ -22,7 +17,6 @@ class CommentsInline(admin.TabularInline):
 
 class AuthorsInLine(admin.TabularInline):
     model = Book.author.through
-    extra = 0
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -31,11 +25,18 @@ class BookAdmin(admin.ModelAdmin):
         'isbn',
         'price',
         'date',
-        'score')
+        'score',
+        'number_copies_stock'
+        )
     inLines = [AuthorsInLine]
 
 
 admin.site.register(Book, BookAdmin)
+
+
+class BooksInline(admin.TabularInline):
+    model = Book
+    extra = 0
 
 
 class CommentAdmin(admin.ModelAdmin):
