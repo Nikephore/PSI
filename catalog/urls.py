@@ -4,9 +4,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.home, name='home')
+    url(r'^$', views.home, name='home'),
+    path(r'book/<slug:slug>', views.BookDetailView, name='book-detail'),
+
 ]
 
 urlpatterns +=[
-    url(r'^book/(?P<pk>\d+)$', views.BookDetailView.as_view(), name='book-detail')
 ]

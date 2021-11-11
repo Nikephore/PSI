@@ -23,6 +23,7 @@ def home(request):
     return render(request, 'home.html', context=None)
 
 
-class BookDetailView(generic.DetailView):
-    model = Book
-    
+def BookDetailView(request, slug):
+    sl=(get_object_or_404(Book, slug=slug))
+    return render(request, "catalog/book_detail.html", {"book" : sl})
+  
