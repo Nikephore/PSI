@@ -21,3 +21,8 @@ def home(request):
 
     # Renderiza la plantilla HTML home.html con los datos en la variable contexto
     return render(request, 'home.html', context=None)
+
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    

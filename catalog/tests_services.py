@@ -11,7 +11,7 @@ from .models import Author as Author
 from .models import Book as Book
 from .models import Comment as Comment
 
-DETAIL_SERVICE = "detail"
+DETAIL_SERVICE = "book-detail"
 SEARCH_SERVICE = "search"
 SEARCH_TITLE = "Search"
 
