@@ -54,7 +54,7 @@ class Command(BaseCommand):
 
         self.NUMBERUSERS = 20
         self.NUMBERBOOKS = 30
-        self.NUMBERAUTHORS = 5
+        self.NUMBERAUTHORS = 10
         self.MAXAUTHORSPERBOOK = 3
         self.NUMBERCOMMENTS = self.NUMBERBOOKS * 5
         self.MAXCOPIESSTOCK = 30
@@ -86,9 +86,7 @@ class Command(BaseCommand):
         for _ in range(self.NUMBERAUTHORS):
             fn = self.faker.first_name()
             ln = self.faker.unique.last_name()
-            new_author = Author(first_name='', last_name='')
-            new_author.first_name=fn
-            new_author.last_name=ln
+            new_author = Author(first_name=fn, last_name=ln)
             new_author.save()
 
     def cover(self, book):
@@ -121,6 +119,8 @@ class Command(BaseCommand):
             d = self.faker.date()
             s = float(decimal.Decimal(random.randrange(100, 999))/100)
             sl = t # al ser solo una palabra no se distingue
+            new_book = Book(isbn=isbn, title=t, price=p, path_to_cover_image='', number_copies_stock=c, date=d, score=s, slug=t)
+            new_book.save()
 
         
 
