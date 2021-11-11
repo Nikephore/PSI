@@ -121,9 +121,7 @@ class Command(BaseCommand):
             sl = t # al ser solo una palabra no se distingue
             new_book = Book(isbn=isbn, title=t, price=p, path_to_cover_image='', number_copies_stock=c, date=d, score=s, slug=t)
             new_book.save()
-
-        
-
+       
 
     def comment(self):
         " Insert comments"

@@ -26,4 +26,8 @@ def home(request):
 def BookDetailView(request, slug):
     sl=(get_object_or_404(Book, slug=slug))
     return render(request, "catalog/book_detail.html", {"book" : sl})
+
   
+class BookListView(generic.ListView):
+    model = Book
+    paginate_by = 5

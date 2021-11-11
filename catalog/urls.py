@@ -10,4 +10,5 @@ urlpatterns = [
 ]
 
 urlpatterns +=[
+    url(r'^books/$', views.BookListView.as_view(), name='books'),
 ]
