@@ -15,7 +15,7 @@
 
     {% for com in book.comment_set.all %}
     <hr>
-    <p><strong>User:</strong> {{ com.user }}</p>
+    <p><strong>User:</strong> {{ com.user }} | {{ com.date }}</p>
     <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ com.msg }}</p>
     
     {% endfor %}
