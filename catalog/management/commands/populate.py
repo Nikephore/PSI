@@ -8,6 +8,7 @@
 # execute python manage.py  populate
 #
 # use module Faker generator to generate data (https://zetcode.com/python/faker/)
+import decimal
 import os
 
 from django.core.management.base import BaseCommand
@@ -15,6 +16,7 @@ from catalog.models import (Author, Book, Comment)
 from django.contrib.auth.models import User
 from faker import Faker
 from decimal import Decimal
+import random
 # define STATIC_PATH in settings.py
 from bookshop.settings import STATIC_PATH
 from PIL import Image, ImageDraw, ImageFont
@@ -82,9 +84,11 @@ class Command(BaseCommand):
     def author(self):
         " Insert authors"
         for _ in range(self.NUMBERAUTHORS):
-            fn = faker.unique.first_name()
-            ln = faker.unique.last_name()
-            new_author = Author(first_name=fn, last_name=ln)
+            fn = self.faker.first_name()
+            ln = self.faker.unique.last_name()
+            new_author = Author(first_name='', last_name='')
+            new_author.first_name=fn
+            new_author.last_name=ln
             new_author.save()
 
     def cover(self, book):
@@ -109,13 +113,13 @@ class Command(BaseCommand):
         " Insert books"
         # remove pass and ADD CODE HERE
         for _ in range(self.NUMBERBOOKS):
-            t = faker.unique.word()
-            isbn = faker.unique.numerify("#############")
-            p = faker.random_double()
-            # ptci = faker.unique.path
-            c = faker.unique.random_int(self.MAXCOPIESSTOCK)
-            d = faker.unique.
-            s = faker.random_double()
+            t = self.faker.unique.word()
+            isbn = self.faker.unique.numerify("#############")
+            p = float(decimal.Decimal(random.randrange(100, 999))/100)
+            # ptci = self.faker.unique.path
+            c = self.faker.unique.random_int(self.MAXCOPIESSTOCK)
+            d = self.faker.date()
+            s = float(decimal.Decimal(random.randrange(100, 999))/100)
             sl = t # al ser solo una palabra no se distingue
 
         
