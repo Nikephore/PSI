@@ -7,7 +7,7 @@
    </head>
    <body>
       {% block header %} 
-      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'home' %}">Inicio</a>
       <hr>
       {% endblock %}
       {% block menu %}
@@ -20,8 +20,7 @@
          <a href="{% url 'signup' %}?next={{request.path}}">Signup</a>
       {% endif %}
 
-      <a href="{%url 'books' %}">Books</a>
-      
+      <a href="{% url 'books' %}">Books</a>
       
       <hr>
       {% endblock %}

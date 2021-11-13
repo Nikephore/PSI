@@ -4,11 +4,39 @@
 {% endblock %}
 
 {% block content %}
-<h1>Homepage</h1>
+<h1>Inicio</h1>
 {% if user.is_authenticated %}
-    Hi {{ user.username }}!
+    Hi <strong>{{ user.username }}!</strong>
 {% else %}
     <p>You are not logged in</p>
+{% endif %}
+
+{% if score_order %}
+<ul>
+  <h3>Libros mejor valorados</h3>  
+  {% for book in score_order %}
+  <li>
+    <a href="{{ book.get_absolute_url }}">{{ book.title }} {{ book.score }}</a>
+  </li>
+  {% endfor %}
+
+</ul>
+{% else %}
+  <p>There are no books in the library.</p>
+{% endif %}
+
+{% if date_order %}
+<ul>
+  <h3>Libros m&aacute;s recientes</h3>  
+  {% for book in date_order %}
+  <li>
+    <a href="{{ book.get_absolute_url }}">{{ book.title }} {{ book.date }}</a>
+  </li>
+  {% endfor %}
+
+</ul>
+{% else %}
+  <p>There are no books in the library.</p>
 {% endif %}
 {% endblock content %}
 
