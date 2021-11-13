@@ -10,13 +10,17 @@
 # use module Faker generator to generate data (https://zetcode.com/python/faker/)
 import decimal
 import os
+import pathlib
 
 from django.core.management.base import BaseCommand
 from catalog.models import (Author, Book, Comment)
 from django.contrib.auth.models import User
 from faker import Faker
 from decimal import Decimal
+from django.utils import timezone
 import random
+import pathlib
+import datetime
 # define STATIC_PATH in settings.py
 from bookshop.settings import STATIC_PATH
 from PIL import Image, ImageDraw, ImageFont
@@ -56,7 +60,7 @@ class Command(BaseCommand):
         self.NUMBERBOOKS = 30
         self.NUMBERAUTHORS = 10
         self.MAXAUTHORSPERBOOK = 3
-        self.NUMBERCOMMENTS = self.NUMBERBOOKS * 5
+        self.NUMBERCOMMENTS = 40
         self.MAXCOPIESSTOCK = 30
         self.cleanDataBase()   # clean database
         # The faker.Faker() creates and initializes a faker generator,
@@ -78,7 +82,15 @@ class Command(BaseCommand):
 
     def user(self):
         " Insert users"
-        # remove pass and ADD CODE HERE
+        for _ in range(self.NUMBERUSERS):
+            fn = self.faker.first_name()
+            ln = self.faker.last_name()
+            email = self.faker.email()
+            username = self.faker.name()
+            password = self.faker.sha256()
+            password2 = password
+            new_user = User(first_name=fn, last_name=ln, email=email, username=username, password=password)
+            new_user.save()
         
 
     def author(self):
@@ -107,6 +119,7 @@ class Command(BaseCommand):
             book.author.all()[0])[:15], font=fnt, fill=(255, 255, 0))
         img.save(os.path.join(STATIC_PATH, book.path_to_cover_image))
 
+
     def book(self):
         " Insert books"
         # remove pass and ADD CODE HERE
@@ -119,12 +132,23 @@ class Command(BaseCommand):
             d = self.faker.date()
             s = float(decimal.Decimal(random.randrange(100, 999))/100)
             sl = t # al ser solo una palabra no se distingue
-            new_book = Book(isbn=isbn, title=t, price=p, number_copies_stock=c, date=d, score=s, slug=t)
-            self.cover(self, new_book)
+            path_string= "covers/" +sl + ".png"
+            pth = pathlib.Path(path_string)
+            new_book = Book(isbn=isbn, title=t, price=p, path_to_cover_image=pth, number_copies_stock=c, date=d, score=s, slug=t)
+            new_book.save()
+            new_book.author.add(Author.objects.order_by("?").first())
+            self.cover(new_book)
             new_book.save()
        
 
     def comment(self):
         " Insert comments"
         # remove pass and ADD CODE HERE
-        pass
+        for _ in range(self.NUMBERCOMMENTS):
+            user= User.objects.order_by("?").first()
+            book= Book.objects.order_by("?").first()
+            date = datetime.datetime.now(tz=timezone.utc)
+            msg = self.faker.text(max_nb_chars=200)
+
+            new_comment = Comment(user=user, book=book, date=date, msg=msg)
+            new_comment.save()

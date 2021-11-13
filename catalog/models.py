@@ -25,7 +25,7 @@ class Book(models.Model):
     isbn = models.CharField('ISBN', max_length=13, help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>', unique=True)
     title = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    path_to_cover_image = models.ImageField()
+    path_to_cover_image = models.FilePathField(auto_created=True)
     number_copies_stock = models.IntegerField()
     date = models.DateField(null=True)
     score = models.DecimalField(max_digits=4, decimal_places=2)
