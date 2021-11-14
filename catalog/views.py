@@ -46,7 +46,7 @@ class Search(generic.ListView):
             author__in=author_search
         )
 
-        search_list = book_author | book_search_list
+        search_list = (book_author | book_search_list).distinct()
 
         return search_list
 
