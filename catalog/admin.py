@@ -15,6 +15,7 @@ class CommentsInline(admin.TabularInline):
     extra = 0
 '''
 
+
 class AuthorsInLine(admin.TabularInline):
     model = Book.author.through
 
