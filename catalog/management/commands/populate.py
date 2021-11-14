@@ -16,10 +16,8 @@ from django.core.management.base import BaseCommand
 from catalog.models import (Author, Book, Comment)
 from django.contrib.auth.models import User
 from faker import Faker
-from decimal import Decimal
 from django.utils import timezone
 import random
-import pathlib
 import datetime
 # define STATIC_PATH in settings.py
 from bookshop.settings import STATIC_PATH
@@ -55,7 +53,6 @@ class Command(BaseCommand):
             self.font = \
                 "/usr/share/fonts/truetype/freefont/FreeMono.ttf"
 
-
         self.NUMBERUSERS = 20
         self.NUMBERBOOKS = 30
         self.NUMBERAUTHORS = 10
@@ -71,8 +68,8 @@ class Command(BaseCommand):
         self.comment()
         # check a variable that is unlikely been set out of heroku
         # as DYNO to decide which font directory should be used.
-        # Be aware that your available fonts may be different 
-        # from the ones defined here 
+        # Be aware that your available fonts may be different
+        # from the ones defined here
 
     def cleanDataBase(self):
         # delete all models stored (clean table)
@@ -88,10 +85,8 @@ class Command(BaseCommand):
             email = self.faker.email()
             username = self.faker.name()
             password = self.faker.sha256()
-            password2 = password
             new_user = User(first_name=fn, last_name=ln, email=email, username=username, password=password)
             new_user.save()
-        
 
     def author(self):
         " Insert authors"
@@ -119,7 +114,6 @@ class Command(BaseCommand):
             book.author.all()[0])[:15], font=fnt, fill=(255, 255, 0))
         img.save(os.path.join(STATIC_PATH, book.path_to_cover_image))
 
-
     def book(self):
         " Insert books"
         # remove pass and ADD CODE HERE
@@ -131,22 +125,21 @@ class Command(BaseCommand):
             c = self.faker.unique.random_int(self.MAXCOPIESSTOCK)
             d = self.faker.date()
             s = float(decimal.Decimal(random.randrange(100, 999))/100)
-            sl = t # al ser solo una palabra no se distingue
-            path_string= "covers/" +sl + ".png"
+            sl = t  # al ser solo una palabra no se distingue
+            path_string = "covers/" + sl + ".png"
             pth = pathlib.Path(path_string)
             new_book = Book(isbn=isbn, title=t, price=p, path_to_cover_image=pth, number_copies_stock=c, date=d, score=s, slug=t)
             new_book.save()
             new_book.author.add(Author.objects.order_by("?").first())
             self.cover(new_book)
             new_book.save()
-       
 
     def comment(self):
         " Insert comments"
         # remove pass and ADD CODE HERE
         for _ in range(self.NUMBERCOMMENTS):
-            user= User.objects.order_by("?").first()
-            book= Book.objects.order_by("?").first()
+            user = User.objects.order_by("?").first()
+            book = Book.objects.order_by("?").first()
             date = datetime.datetime.now(tz=timezone.utc)
             msg = self.faker.text(max_nb_chars=200)
 
