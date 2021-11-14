@@ -8,12 +8,13 @@ from .models import Book, Author
 
 
 def home(request):
-    """
-    Función vista para la página inicio del sitio.
-    """
+    score_order = Book.objects.all().order_by('-score')[:5]
+    date_order = Book.objects.all().order_by('-date')[:5]
+
+    context = {'score_order' : score_order, 'date_order' : date_order}
 
     # Renderiza la plantilla HTML home.html con los datos en la variable contexto
-    return render(request, 'home.html', context=None)
+    return render(request, 'home.html', context=context)
 
 
 class Search(generic.ListView):
