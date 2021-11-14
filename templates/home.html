@@ -21,7 +21,7 @@
   <h3>Libros mejor valorados</h3>  
   {% for book in score_order %}
   <li>
-    <a href="{{ book.get_absolute_url }}">{{ book.title }} {{ book.score }}</a>
+    <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> {{ book.score }}
   </li>
   {% endfor %}
 
@@ -35,7 +35,7 @@
   <h3>Libros m&aacute;s recientes</h3>  
   {% for book in date_order %}
   <li>
-    <a href="{{ book.get_absolute_url }}">{{ book.title }} {{ book.date }}</a>
+    <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> {{ book.date }}
   </li>
   {% endfor %}
 

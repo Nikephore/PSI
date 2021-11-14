@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, query
 
 # Create your views here.
 from .models import Book, Author
@@ -16,14 +16,18 @@ def home(request):
     # Renderiza la plantilla HTML home.html con los datos en la variable contexto
     return render(request, 'home.html', context=context)
 
-
+    
 class Search(generic.ListView):
     model = Book
     template_name = 'search.html'
     paginate_by = 5
 
+    query_name = ''
+
     def get_queryset(self):
         query = self.request.GET.get('q')
+
+        self.query_name = query
 
         book_search_list = Book.objects.filter(title__icontains=query)
 
@@ -39,6 +43,12 @@ class Search(generic.ListView):
         search_list = (book_author | book_search_list).distinct()
 
         return search_list
+    
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context.update({'result' : self.query_name})
+        return context
 
 
 def BookDetailView(request, slug):
