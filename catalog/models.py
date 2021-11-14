@@ -1,11 +1,8 @@
 from django.db import models
-from django.db.models.fields.related import ForeignKey
 # Used to generate URLs by reversing the URL patterns
 from django.urls import reverse
 # Requerida para las instancias de libros únicos
-import uuid
 from django.contrib.auth.models import User
-from datetime import date
 from django.template.defaultfilters import slugify
 
 
@@ -15,7 +12,6 @@ class Author(models.Model):
 
     def __str__(self):
         return self.first_name + " " + self.last_name
-
 
     def get_absolute_url(self):
         return slugify(self.first_name+" "+self.last_name+" "+str(self.pk))
@@ -32,19 +28,16 @@ class Book(models.Model):
     slug = models.SlugField()
     author = models.ManyToManyField(Author, help_text="Introduzca un autor para este libro")
 
-
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
-        #Para permitir titulos de libros repetidos
-        self.slug=slugify(self.title+' '+str(self.pk))
+        # Para permitir titulos de libros repetidos
+        self.slug = slugify(self.title+' '+str(self.pk))
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.slug)])
-
-    
 
 
 class Comment(models.Model):
@@ -55,8 +48,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.msg
-
-
-
-
-
