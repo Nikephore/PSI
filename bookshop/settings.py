@@ -21,7 +21,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['safe-island-06279.herokuapp.com']
+ALLOWED_HOSTS = ['safe-island-06279.herokuapp.com', '127.0.0.1', 'Localhost']
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/tmp/app−messages'  # change this to a proper location
@@ -123,7 +123,7 @@ USE_TZ = True
 
 CSRF_COOKIE_SECURE = True
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 SESSION_COOKIE_SECURE = True
 
@@ -145,7 +145,7 @@ LOGOUT_REDIRECT_URL = '/'
 STATIC_PATH = 'static/'
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
