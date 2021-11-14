@@ -7,7 +7,7 @@
   <p><strong>ISBN:</strong> {{ book.isbn }}</p>
   <p><strong>Price:</strong> {{ book.price }}</p>
   <p><strong>Number of copies:</strong> {{ book.number_copies_stock }}</p>
-  <p><strong>Image:</strong> {{ book.path_to_cover_image }}</p>
+  <p><strong>Image:</strong> <img src = "{{ book.path_to_cover_image }}" alt="{{ book.path_to_cover_image }}"></p>
   <p><strong>Author/s:</strong> {% for author in book.author.all %} {{ author }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 
   <div>
