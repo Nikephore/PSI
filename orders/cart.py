@@ -8,7 +8,7 @@ class Cart(object):
         """
         Initialize the cart.
         if request.session[settings.CART_SESSION_ID]
-        does not exist create one
+            does not exist create one
         Important: Make a copy of request.session[
         settings.CART_SESSION_ID]
         do not manipulate it directly
@@ -79,7 +79,7 @@ class Cart(object):
         return sum(item['quantity'] for item in self.cart.values())
 
     def get_total_price(self):
-        return sum(Decimal(item['total_price']) for item in self.cart.values())
+        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
