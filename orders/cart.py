@@ -22,13 +22,11 @@ class Cart(object):
         # from the same client
 
         self.session = request.session
-        cart = self.session.get(settings.
-                                CART_SESSION_ID)
+        cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             # If there is no cart create an empty one
             # and save it in the session
-            cart = self.session[settings.
-                                CART_SESSION_ID] = {}
+            cart = self.session[settings.CART_SESSION_ID] = {}
             self.cart = cart
 
     def add(self, book, quantity=1, update_quantity=False):
@@ -48,3 +46,41 @@ class Cart(object):
         """
         book_id = str(book.id)
         # your code goes here
+        if book_id not in self.cart:
+            self.cart[book_id] = {'quantity': 0, 'price' : str(book.price)}
+        if update_quantity:
+            self.cart[book_id]['quantity'] = quantity
+        else:
+           self.cart[book_id]['quantity'] += quantity 
+        self.save()
+
+    def save(self):
+        self.session[settings.CART_SESSION_ID] = self.cart
+        self.session.moified = True
+    
+    def remove(self, book):
+        book_id = str(book.id)
+        if book_id in self.cart:
+            del self.cart[book_id]
+            self.save()
+
+    def __iter__(self):
+        book_ids = self.cart.keys()
+        books = Book.objects.filter(id__in=book_ids)
+        for book in books:
+            self.cart[str(book.id)]['book'] = book
+    
+        for item in self.cart.values():
+            item['price'] = Decimal(item['price'])
+            item['total_price'] = item['price'] * item['quantity']
+            yield item
+
+    def __len__(self):
+        return sum(item['quantity'] for item in self.cart.values())
+
+    def get_total_price(self):
+        return sum(Decimal(item['total_price']) for item in self.cart.values())
+
+    def clear(self):
+        del self.session[settings.CART_SESSION_ID]
+        self.session.modified = True

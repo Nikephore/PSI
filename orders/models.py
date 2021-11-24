@@ -7,17 +7,15 @@ from catalog.models import Book
 
 # Create your models here.
 class Order(models.Model):
-    first_name = models.CharField()
-    last_name = models.CharField()
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     email = models.EmailField()
-    address = models.CharField()
-    postalCode = models.CharField()
-    city = models.CharField()
+    address = models.CharField(max_length=300)
+    postalCode = models.CharField(max_length=5)
+    city = models.CharField(max_length=50)
     created = models.DateTimeField()
     updated = models.DateTimeField()
     paid = models.BooleanField()
-
-
 
 class OrderItem: 
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null = True)
