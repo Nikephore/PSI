@@ -11,14 +11,24 @@ class Order(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
     address = models.CharField(max_length=300)
-    postalCode = models.CharField(max_length=5)
+    postal_code = models.CharField(max_length=5)
     city = models.CharField(max_length=50)
-    created = models.DateTimeField()
-    updated = models.DateTimeField()
-    paid = models.BooleanField()
+    created = models.DateTimeField(null=True)
+    updated = models.DateTimeField(null=True)
+    paid = models.BooleanField(null=True)
+    
 
-class OrderItem: 
+    def __str__(self):
+        return self.first_name
+
+    def get_total_cost(self):
+        return 1
+
+class OrderItem(models.Model): 
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null = True)
     book =  models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
-    price = models.DecimalField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
+
+    def __str__(self):
+        return  "Item:" + str(self.book) +" con precio " + str(self.price )
