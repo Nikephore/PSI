@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models.deletion import SET_NULL
 from django.db.models.fields import CharField
 from django.db.models.lookups import PostgresOperatorLookup
+from decimal import Decimal
+
 
 from catalog.models import Book
 
@@ -22,10 +24,14 @@ class Order(models.Model):
         return self.first_name
 
     def get_total_cost(self):
-        return 1
+        ret = 0
+        for item in self.items.all():
+            ret += Decimal(item.price) * item.quantity
+
+        return ret
 
 class OrderItem(models.Model): 
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null = True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null = True, related_name='items')
     book =  models.ForeignKey(Book, on_delete=models.SET_NULL, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
