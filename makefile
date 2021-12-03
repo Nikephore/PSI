@@ -65,6 +65,8 @@ test_authentication_services:
 test_orders_cart:
 	$(CMD) test orders.tests_cart --keepdb
 
+test_orders_models:
+	$(CMD) test orders.tests_models --keepdb
 # other commands that may be useful but require tuning
 #test_heroku:
 #	$(HEROKU) $(CMD) test datamodel.tests_models.GameModelTests --keepdb & wait
