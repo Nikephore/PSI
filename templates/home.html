@@ -3,12 +3,13 @@
    Home
 {% endblock %}
 
+{% load static %}
 {% block content %}
-<h1>Inicio</h1>
 
-<form action="{% url 'search' %}" method="get">
+<div class="center_text">
+  <form action="{% url 'search' %}" method="get">
     <input name="q" type="text" placeholder="Search...">
-</form>
+  </form>
 
 {% if user.is_authenticated %}
     Hi <strong>{{ user.username }}!</strong>
@@ -16,30 +17,49 @@
     <p>You are not logged in</p>
 {% endif %}
 
-{% if score_order %}
-<ul>
-  <h3>Libros mejor valorados</h3>  
-  {% for book in score_order %}
-  <li>
-    <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> {{ book.score }}
-  </li>
-  {% endfor %}
+</div>
 
-</ul>
+{% if score_order %}
+<div class="center_text">
+  <ul id="book_list">
+    <div class="center_text">
+      <h3>Libros mejor valorados</h3>  
+    </div>
+    
+    {% for book in score_order %}
+    <li>
+      <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
+      <div class="book_list_caption">
+        {{ book.title }} {{ book.score }}
+      </div>
+    </li>
+    {% endfor %}
+  
+  </ul>
+</div>
+
 {% else %}
   <p>There are no books in the library.</p>
 {% endif %}
 
 {% if date_order %}
-<ul>
-  <h3>Libros m&aacute;s recientes</h3>  
-  {% for book in date_order %}
-  <li>
-    <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> {{ book.date }}
-  </li>
-  {% endfor %}
+<div class="center_text">
+  <ul id="book_list">
+    <div class="center_text">
+      <h3>Libros m&aacute;s recientes</h3>
+    </div>  
+    {% for book in date_order %}
+    <li>
+      <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
+      <div class="book_list_caption">
+        {{ book.title }} {{ book.date }}
+      </div>
+    </li>
+    {% endfor %}
+  
+  </ul>
+</div>
 
-</ul>
 {% else %}
   <p>There are no books in the library.</p>
 {% endif %}

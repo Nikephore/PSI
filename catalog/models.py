@@ -28,12 +28,15 @@ class Book(models.Model):
     slug = models.SlugField()
     author = models.ManyToManyField(Author, help_text="Introduzca un autor para este libro")
 
+    class Meta:
+        ordering = ['title']
+    
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
         # Para permitir titulos de libros repetidos
-        self.slug = slugify(self.title+' '+str(self.pk))
+        self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

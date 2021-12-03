@@ -20,7 +20,7 @@ def home(request):
 class Search(generic.ListView):
     model = Book
     template_name = 'search.html'
-    paginate_by = 5
+    paginate_by = 9
 
     query_name = ''
 
@@ -64,4 +64,4 @@ class AuthorListView(generic.ListView):
 class BookListView(generic.ListView):
     model = Book
     template_name = 'book_list.html'
-    paginate_by = 5
+    paginate_by = 9

@@ -1,0 +1,45 @@
+* {
+    padding: 0; 
+    margin: 0;   
+}
+
+a {
+    color: rgb(144, 194, 231);
+    text-decoration: none;
+}
+
+.header {
+    background-color:rgb(9, 35, 39);
+    height: 70px;
+    margin-bottom: 10px;
+}
+
+.footer {
+    background-color: rgb(9, 35, 39);
+    color: rgb(144, 194, 231);
+
+    height: 40px;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-top: 30px;
+}
+
+
+#book_list li {
+    height: 350px;
+    width: 250px;
+    display: inline-block;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.book_list_caption {
+    display:block;
+}

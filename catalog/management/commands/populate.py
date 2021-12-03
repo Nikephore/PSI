@@ -101,24 +101,37 @@ class Command(BaseCommand):
            This function creates a very basic cover
            that show (partially),
            the primary key, title and author name"""
-
-        img = Image.new('RGB', (200, 300), color=(73, 109, 137))
+        
+        ran = random.randint(3, 10)
+        rotation = random.randint(0, 359)
+        img = Image.new('RGB', (200, 300), color=(9, 35, 39))
         # your font directory may be different
-        fnt = ImageFont.truetype(
-            self.font,
-            28, encoding="unic")
+        fntt = ImageFont.truetype(
+            os.path.join(STATIC_PATH, 'fonts/roboto/Roboto-Medium.ttf'),
+            25, encoding="unic")
+        fnta = ImageFont.truetype(
+            os.path.join(STATIC_PATH, 'fonts/roboto/Roboto-Medium.ttf'),
+            15, encoding="unic")
         d = ImageDraw.Draw(img)
-        d.text((10, 100), "PK %05d" % book.id, font=fnt, fill=(255, 255, 0))
-        d.text((20, 150), book.title[:15], font=fnt, fill=(255, 255, 0))
-        d.text((20, 200), "By %s" % str(
-            book.author.all()[0])[:15], font=fnt, fill=(255, 255, 0))
-        img.save(os.path.join(STATIC_PATH, book.path_to_cover_image))
+        d.rectangle([10, 10, 190, 290], fill=(11, 83, 81), outline=None, width=5)
+        d.regular_polygon(
+            bounding_circle=(100, 150, 50),
+            n_sides=ran,
+            rotation=rotation,
+            fill=(0, 169, 165),
+            outline=None
+            )
+        d.text((20, 50), book.title[:15], font=fntt, fill=(144, 194, 231))
+        d.text((20, 250), "By %s" % str(
+            book.author.all()[0])[:30], font=fnta, fill=(144, 194, 231))
+        img.save(os.path.join(STATIC_PATH, 'cover/', str(book.slug) + '.png'))
+        book.path_to_cover_image = 'cover/' + str(book.slug) + '.png'
 
     def book(self):
         " Insert books"
         # remove pass and ADD CODE HERE
         for _ in range(self.NUMBERBOOKS):
-            t = self.faker.unique.word()
+            t = self.faker.unique.word().title()
             isbn = self.faker.unique.numerify("#############")
             p = float(decimal.Decimal(random.randrange(100, 999))/100)
             # ptci = self.faker.unique.path
@@ -126,7 +139,7 @@ class Command(BaseCommand):
             d = self.faker.date()
             s = float(decimal.Decimal(random.randrange(100, 999))/100)
             sl = t  # al ser solo una palabra no se distingue
-            path_string = "covers/" + sl + ".png"
+            path_string = "cover/" + sl + ".png"
             pth = pathlib.Path(path_string)
             new_book = Book(isbn=isbn, title=t, price=p, path_to_cover_image=pth, number_copies_stock=c, date=d, score=s, slug=t)
             new_book.save()
