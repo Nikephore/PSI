@@ -62,6 +62,8 @@ test_catalog_services:
 test_authentication_services:
 	$(CMD) test authentication.tests_services --keepdb
 
+test_orders_services:
+	$(CMD) test orders.tests_services --keepdb
 test_orders_cart:
 	$(CMD) test orders.tests_cart --keepdb
 
