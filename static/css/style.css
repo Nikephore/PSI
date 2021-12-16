@@ -8,20 +8,26 @@ a {
     text-decoration: none;
 }
 
+.body {
+    background-color: rgb(238, 240, 242);
+}
+
 .header {
-    background-color:rgb(9, 35, 39);
+    overflow: hidden;
+    background-color:rgb(53, 59, 60);
+    position: fixed;
+    top: 0;
+    width: 100%;
     height: 70px;
-    margin-bottom: 10px;
 }
 
 .footer {
-    background-color: rgb(9, 35, 39);
+    background-color: rgb(53, 59, 60);
     color: rgb(144, 194, 231);
 
     height: 40px;
     padding-top: 10px;
     padding-left: 10px;
-    margin-top: 30px;
 }
 
 
@@ -42,4 +48,38 @@ a {
 
 .book_list_caption {
     display:block;
+}
+
+.book_detail {
+    padding-top: 20px;
+    padding-left: 10px;
+}
+
+.book_info {
+    padding-top: 30px;
+    padding-left: 30px;
+    float: left;
+}
+
+.book_image {
+    padding-top: 20px;
+    float: left;
+}
+
+.book_comment_section {
+    padding-left: 10px;
+    padding-bottom: 5px;
+    clear: both;
+}
+
+.book_comments {
+    background-color: rgb(198, 199, 196);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+}
+
+.book_comment_content {
+    padding-left: 20px;
+    padding-top: 5px;
 }
