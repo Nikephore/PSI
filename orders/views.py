@@ -2,9 +2,10 @@ from orders.forms import CartAddBookForm
 from .cart import Cart
 from catalog.models import Book
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 
 
-def baseCart(request):
+def BaseCart(request):
     context = None
     return render(request, 'orders/cart.html', context=context)
 
