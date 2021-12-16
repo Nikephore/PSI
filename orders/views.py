@@ -1,22 +1,21 @@
 from orders.forms import CartAddBookForm
 from .cart import Cart
 from catalog.models import Book
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 
 
 class BaseCart():
     template_name = 'cart.html'
 
-def cart_add(request, book_slug):
+def cart_add(request, slug):
     cart = Cart(request)
+    if request.method == 'POST':
     # Procesar el formulario para obtener la unidades y anyadirlas
-    form = CartAddBookForm(request)
-    if form.is_valid():
-        form.save()
-        units = form.units
-        book = Book.objects.get(book_slug=book_slug)
-        cart.add(book, quantity=units)
-        return redirect('cart_list')
+        form = CartAddBookForm(request.POST)
+        if form.is_valid():
+            units = form.cleaned_data.get('quantity')
+            sl = (get_object_or_404(Book, slug=slug))
+            cart.add(sl, quantity=units)
     return redirect('cart_list')
 
 def cart_remove(request, book_slug):

@@ -56,7 +56,7 @@ class Cart(object):
 
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
-        self.session.moified = True
+        self.session.modified = True
     
     def remove(self, book):
         book_id = str(book.id)
