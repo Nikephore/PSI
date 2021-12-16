@@ -28,6 +28,7 @@ class Cart(object):
             # and save it in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
             self.cart = cart
+            print('generado un carrito nuevo')
 
     def add(self, book, quantity=1, update_quantity=False):
         """
@@ -58,6 +59,10 @@ class Cart(object):
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
+        print('En el save tenemos estas claves')
+        for v in self.cart.keys():
+            print(str(v))
+            
     
     def remove(self, book):
         book_id = str(book.id)

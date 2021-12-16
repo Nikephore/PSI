@@ -16,12 +16,20 @@ def cart_add(request, slug):
         form = CartAddBookForm(request.POST)
         if form.is_valid():
             units = form.cleaned_data.get('quantity')
-            sl = (get_object_or_404(Book, slug=slug))
-            cart.add(sl, quantity=units)
+            print("ubidades en views a anyadir " + str(units))
+            sl = Book.objects.get(slug=slug)
+            print(str(sl.id))
+            cart.add(sl, units)
     return redirect('cart_list')
 
-def cart_remove(request, book_slug):
+def cart_remove(request, slug):
     cart = Cart(request)
-    book = Book.objects.get(book_slug=book_slug)
-    cart.remove(book)
-    return redirect("cart_list")
+    if request.method == 'GET':
+    # Procesar el formulario para obtener la unidades y anyadirlas
+        form = CartAddBookForm(request.GET)
+        if form.is_valid():
+            units = form.cleaned_data.get('quantity')
+            sl = (get_object_or_404(Book, slug=slug))
+            print(str(sl.id))
+            cart.remove(sl, quantity=units)
+    return redirect('cart_list')
