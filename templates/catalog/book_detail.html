@@ -1,24 +1,42 @@
 {% extends "base_generic.html" %}
 
 {% load static %}
+
 {% block content %}
-  <h1>Title: {{ book.title }}</h1>
+  <div class="book_detail">
+    <h1>Title: {{ book.title }}</h1>
 
-  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-  <p><strong>Price:</strong> {{ book.price }}</p>
-  <p><strong>Number of copies:</strong> {{ book.number_copies_stock }}</p>
-  <p><img src = "{% static book.path_to_cover_image %}" alt="{{ book.path_to_cover_image }}"></p>
-  <p><strong>Author/s:</strong> {% for author in book.author.all %} {{ author }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <div class="book_image">
+      <p><img src = "{% static book.path_to_cover_image %}" alt="{{ book.path_to_cover_image }}"></p>
+    </div>
+    
+    <div class="book_info">
+      <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+      <p><strong>Price:</strong> {{ book.price }} €</p>
+      <p><strong>Number of copies:</strong> {{ book.number_copies_stock }}</p>
+      <p><strong>Author/s:</strong> {% for author in book.author.all %} {{ author }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    
+    </div>  
+  </div>
 
-  <div>
-    <h4>Comments</h4>
+  <div class="book_comment_section">
+    <br>
+    <h3>Comments:</h3> 
+  </div>
 
-    {% for com in book.comment_set.all %}
-    <hr>
-    <p><strong>User:</strong> {{ com.user }} | {{ com.date }}</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ com.msg }}</p>
+  <hr>
+
+  <div class="book_comments">
+    {% for com in book.comment_set.all %} 
+      <p><strong>{{ com.user }}</strong> | {{ com.date }}</p>
+      <div class="book_comment_content">
+        <p>{{ com.msg }}</p>
+      </div>
+      <br>
     
     {% endfor %}
   </div>
+  
+  
   
 {% endblock %}

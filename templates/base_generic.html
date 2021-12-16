@@ -24,10 +24,14 @@
          <a href="{% url 'books' %}">Books</a>
       </div>
       {% endblock %}
-      {% block content %}
-      <!-- main block -->
+
+      <div class= "body">
+         {% block content %}
+         <!-- main block -->
       
-      {% endblock %}
+         {% endblock %}
+      </div>
+      
 
       {% block pagination %}
       {% if is_paginated %}

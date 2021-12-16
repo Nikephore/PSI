@@ -96,6 +96,13 @@ class Command(BaseCommand):
             new_author = Author(first_name=fn, last_name=ln)
             new_author.save()
 
+
+#$cultured: rgba(238, 240, 242, 1);
+#$silver: rgba(198, 199, 196, 1);
+#$spanish-gray: rgba(162, 153, 158, 1);
+#$deep-taupe: rgba(132, 106, 106, 1);
+#$onyx: rgba(53, 59, 60, 1);
+
     def cover(self, book):
         """create fake cover image.
            This function creates a very basic cover
@@ -104,7 +111,7 @@ class Command(BaseCommand):
         
         ran = random.randint(3, 10)
         rotation = random.randint(0, 359)
-        img = Image.new('RGB', (200, 300), color=(9, 35, 39))
+        img = Image.new('RGB', (200, 300), color=(162, 153, 158))
         # your font directory may be different
         fntt = ImageFont.truetype(
             os.path.join(STATIC_PATH, 'fonts/roboto/Roboto-Medium.ttf'),
@@ -113,17 +120,17 @@ class Command(BaseCommand):
             os.path.join(STATIC_PATH, 'fonts/roboto/Roboto-Medium.ttf'),
             15, encoding="unic")
         d = ImageDraw.Draw(img)
-        d.rectangle([10, 10, 190, 290], fill=(11, 83, 81), outline=None, width=5)
+        d.rectangle([10, 10, 190, 290], fill=(198, 199, 196), outline=None, width=5)
         d.regular_polygon(
             bounding_circle=(100, 150, 50),
             n_sides=ran,
             rotation=rotation,
-            fill=(0, 169, 165),
+            fill=(162, 153, 158),
             outline=None
             )
-        d.text((20, 50), book.title[:15], font=fntt, fill=(144, 194, 231))
+        d.text((20, 50), book.title[:15], font=fntt, fill=(53, 59, 60))
         d.text((20, 250), "By %s" % str(
-            book.author.all()[0])[:30], font=fnta, fill=(144, 194, 231))
+            book.author.all()[0])[:30], font=fnta, fill=(53, 59, 60))
         img.save(os.path.join(STATIC_PATH, 'cover/', str(book.slug) + '.png'))
         book.path_to_cover_image = 'cover/' + str(book.slug) + '.png'
 
