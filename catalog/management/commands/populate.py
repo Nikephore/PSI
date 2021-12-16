@@ -130,7 +130,7 @@ class Command(BaseCommand):
             )
         d.text((20, 50), book.title[:15], font=fntt, fill=(53, 59, 60))
         d.text((20, 250), "By %s" % str(
-            book.author.all()[0])[:30], font=fnta, fill=(144, 194, 231))
+            book.author.all()[0])[:30], font=fnta, fill=(53, 59, 60))
         img.save(os.path.join(STATIC_PATH, 'covers/', str(book.slug) + '.png'))
         book.path_to_cover_image = 'covers/' + str(book.slug) + '.png'
 
