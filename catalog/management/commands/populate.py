@@ -75,7 +75,14 @@ class Command(BaseCommand):
         # delete all models stored (clean table)
         # in database
         # remove pass and ADD CODE HERE
-        pass
+        User.objects.all().delete()
+        Author.objects.all().delete()
+        Book.objects.all().delete()
+        Comment.objects.all().delete()
+        for f in os.listdir(os.path.join(STATIC_PATH, 'covers/')):
+            if not f.endswith(".png"):
+                continue
+            os.remove(os.path.join(os.path.join(STATIC_PATH, 'covers/'), f))
 
     def user(self):
         " Insert users"
