@@ -1,11 +1,12 @@
 from orders.forms import CartAddBookForm
 from .cart import Cart
 from catalog.models import Book
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 
 
-class BaseCart():
-    template_name = 'cart.html'
+def baseCart(request):
+    context = None
+    return render(request, 'orders/cart.html', context=context)
 
 def cart_add(request, slug):
     cart = Cart(request)
