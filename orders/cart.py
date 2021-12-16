@@ -39,12 +39,13 @@ class Cart(object):
         For each book store only the ID (as key)
         and a dictionary
         with the price and quantity as value
-        {’quantity ’: 0,
-        ’price ’: str(book.price)}
-        Store ’price’ as a string because a Decimal
+        {'quantity ': 0,
+        'price': str(book.price)}
+        Store 'price' as a string because a Decimal
         object may not be properlly serialized
         """
         book_id = str(book.id)
+        print('dentro de cart ' + book_id + ' unidades '+ str(quantity)) 
         # your code goes here
         if book_id not in self.cart:
             self.cart[book_id] = {'quantity': 0, 'price' : str(book.price)}
