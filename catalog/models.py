@@ -36,8 +36,10 @@ class Book(models.Model):
 
     def save(self, *args, **kwargs):
         # Para permitir titulos de libros repetidos
-        self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
+        super().save(*args, **kwargs)   
+        self.slug = slugify(self.title + ' ' + str(self.pk))
+        super().save(update_fields=['slug'])
+
 
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.slug)])
