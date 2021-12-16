@@ -124,8 +124,8 @@ class Command(BaseCommand):
         d.text((20, 50), book.title[:15], font=fntt, fill=(144, 194, 231))
         d.text((20, 250), "By %s" % str(
             book.author.all()[0])[:30], font=fnta, fill=(144, 194, 231))
-        img.save(os.path.join(STATIC_PATH, 'cover/', str(book.slug) + '.png'))
-        book.path_to_cover_image = 'cover/' + str(book.slug) + '.png'
+        img.save(os.path.join(STATIC_PATH, 'covers/', str(book.slug) + '.png'))
+        book.path_to_cover_image = 'covers/' + str(book.slug) + '.png'
 
     def book(self):
         " Insert books"
