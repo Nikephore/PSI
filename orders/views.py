@@ -1,4 +1,6 @@
-from orders.forms import CartAddBookForm
+from django.http import request
+from orders.forms import CartAddBookForm, OrderCreateForm
+from orders.tests_services import FIRSTNAME
 from .cart import Cart
 from catalog.models import Book
 from django.shortcuts import render, redirect
@@ -16,9 +18,7 @@ def cart_add(request, slug):
         form = CartAddBookForm(request.POST)
         if form.is_valid():
             units = form.cleaned_data.get('quantity')
-            print("ubidades en views a anyadir " + str(units))
             sl = Book.objects.get(slug=slug)
-            print(str(sl.id))
             cart.add(sl, units)
     return redirect('cart_list')
 
@@ -26,10 +26,15 @@ def cart_remove(request, slug):
     cart = Cart(request)
     if request.method == 'GET':
     # Procesar el formulario para obtener la unidades y anyadirlas
-        form = CartAddBookForm(request.GET)
+        sl = Book.objects.get(slug=slug)
+        cart.remove(sl)
+    return redirect('cart_list')
+
+def order_create(request):
+    if request.method == 'POST':
+        form = OrderCreateForm(request.POST)
         if form.is_valid():
-            units = form.cleaned_data.get('quantity')
-            sl = (get_object_or_404(Book, slug=slug))
-            print(str(sl.id))
-            cart.remove(sl, quantity=units)
+            form.save()
+            render(request, 'orders/created.html', context=None)
+    # Cambiar aqui por lo que sea necesario
     return redirect('cart_list')

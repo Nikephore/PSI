@@ -5,6 +5,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.BaseCart, name='cart_list'),
     path(r'cart_add/<slug:slug>', views.cart_add, name='cart_add'),
-    path(r'cart_remove/<slug:slug>', views.cart_remove, name='cart_remove')
-
+    path(r'cart_remove/<slug:slug>', views.cart_remove, name='cart_remove'),
+    path(r'order_create/', views.order_create, name='order_create'),
 ]

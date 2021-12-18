@@ -27,8 +27,7 @@ class Cart(object):
             # If there is no cart create an empty one
             # and save it in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
-            self.cart = cart
-            print('generado un carrito nuevo')
+        self.cart = cart
 
     def add(self, book, quantity=1, update_quantity=False):
         """
@@ -46,7 +45,6 @@ class Cart(object):
         object may not be properlly serialized
         """
         book_id = str(book.id)
-        print('dentro de cart ' + book_id + ' unidades '+ str(quantity)) 
         # your code goes here
         if book_id not in self.cart:
             self.cart[book_id] = {'quantity': 0, 'price' : str(book.price)}
@@ -59,10 +57,6 @@ class Cart(object):
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
-        print('En el save tenemos estas claves')
-        for v in self.cart.keys():
-            print(str(v))
-            
     
     def remove(self, book):
         book_id = str(book.id)
