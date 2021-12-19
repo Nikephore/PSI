@@ -3,44 +3,84 @@
     margin: 0;   
 }
 
+.pages {
+    background-color: rgb(238, 240, 242);
+    padding-bottom: 20px;
+}
+
 a {
-    color: rgb(144, 194, 231);
+    color: rgb(0, 0, 0);
+}
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    height: 47px
+}
+
+/* Style the navigation bar links */
+.navbar a {
+    color: rgb(238, 240, 242);
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 14px 20px;
     text-decoration: none;
 }
 
-.header {
-    overflow: hidden;
-    background-color:rgb(53, 59, 60);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px;
-}
-
-.header_image {
+.navbar form {
     float: left;
+    display: block;
+    align-content: center;
+    text-align: center;
+    padding: 10px 50px;
+    text-decoration: none;
 }
 
-.header_fields {
+
+/* Right-aligned link */
+.navbar a.right {
+    top: 0;
     float: right;
 }
 
-.body {
-    clear: both;
-    margin-top: 60px;
+/* Change color on hover */
+.navbar a:hover {
     background-color: rgb(238, 240, 242);
+    color: rgb(53, 59, 60);
+}
+  
+/* Active/current link */
+.navbar a.active {
+    background-color: rgb(162, 153, 158);
+    color: white;
+}
+
+.navbar input[type=text] {
+    padding: 3px;
+    margin-top: 0px;
+    font-size: 17px;
+    border: none;
+}
+
+
+.body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(238, 240, 242);
+    clear: bo;
 }
 
 .footer {
     background-color: rgb(53, 59, 60);
-    color: rgb(144, 194, 231);
+    color: rgb(162, 153, 158);
     bottom: 0;
     height: 40px;
     padding-top: 10px;
     padding-left: 10px;
 }
-
-
+  
 #book_list li {
     height: 350px;
     width: 250px;
@@ -54,25 +94,41 @@ a {
 
 .center_text {
     text-align: center;
+    padding-top: 20px;
 }
 
 .book_list_caption {
     display:block;
 }
 
+/*BOOK DETAIL CLASSES*/
+
 .book_detail {
+    padding-top: 20px;
+    padding-left: 10px;
+    display: flex;
+}
+
+.book_title {
     padding-top: 20px;
     padding-left: 10px;
 }
 
 .book_info {
-    padding-top: 30px;
+    padding-top: 20px;
+    padding-right: 30px;
     padding-left: 30px;
     float: left;
 }
 
-.book_image {
+.book_cart {
+    float: right;
     padding-top: 20px;
+    padding-left: 30px;
+}
+
+.book_image {
+    padding-top: 10px;
     float: left;
 }
 
@@ -93,3 +149,31 @@ a {
     padding-left: 20px;
     padding-top: 5px;
 }
+
+/**********************/
+
+.button {
+    background-color: white;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  
+  .button1 {
+    background-color: #b92727; /* Green */ 
+    color: white; 
+    border: 2px solid #b92727;
+  }
+  
+  .button1:hover {
+    background-color: white;
+    color: black;
+  }

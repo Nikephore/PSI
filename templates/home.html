@@ -6,31 +6,18 @@
 {% load static %}
 {% block content %}
 
-<div class="center_text">
-  <form action="{% url 'search' %}" method="get">
-    <input name="q" type="text" placeholder="Search...">
-  </form>
-
-{% if user.is_authenticated %}
-    Hi <strong>{{ user.username }}!</strong>
-{% else %}
-    <p>You are not logged in</p>
-{% endif %}
-
-</div>
-
 {% if score_order %}
 <div class="center_text">
   <ul id="book_list">
     <div class="center_text">
-      <h3>Libros mejor valorados</h3>  
+      <h2>Libros mejor valorados</h2>  
     </div>
     
     {% for book in score_order %}
     <li>
       <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
       <div class="book_list_caption">
-        {{ book.title }} {{ book.score }}
+        <strong>{{ book.score }}</strong>
       </div>
     </li>
     {% endfor %}
@@ -46,13 +33,13 @@
 <div class="center_text">
   <ul id="book_list">
     <div class="center_text">
-      <h3>Libros m&aacute;s recientes</h3>
+      <h2>Libros m&aacute;s recientes</h2>
     </div>  
     {% for book in date_order %}
     <li>
       <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
       <div class="book_list_caption">
-        {{ book.title }} {{ book.date }}
+        <strong>{{ book.date }}</strong>
       </div>
     </li>
     {% endfor %}
