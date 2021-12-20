@@ -5,12 +5,52 @@
     <div class="book_title">
         <h1>Cart</h1>
     </div>
-    
+
+
     {% if cart|length > 0 %}
-        <p>Hacer la tabla del carrito</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in cart_list.items %}
+                    <tr>
+                        <td>{{ value.title }}</td>
+                        <td>{{ value.price }}€</td>
+                        <td>{{ value.quantity }}</td>
+                        <td><a href="{% url 'cart_remove' value.slug %}">Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
-        <p>There are no books in the shopping cart.</p>
+        <div class="book_items">
+            <p>No hay items</p>
+        </div>
+        
     {% endif %}
+
+    
+    <div class="checkout">
+        <p><strong>&nbsp;Total:</strong> {{ cart.get_total_price }}€</p>
+    </div>
+    
+    <div class="checkout">
+        
+        <form action="{% url 'order_create' %}" method="post">
+            {% csrf_token %}
+            <button class="button button1" type="submit">Checkout</button>
+        </form>
+        <div class="shopping">
+            <a href="{% url 'home' %}">Continue Shopping</a>
+        </div>
+    </div>
+
     
 </div>
     

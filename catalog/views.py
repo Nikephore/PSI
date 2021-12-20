@@ -56,11 +56,6 @@ def BookDetailView(request, slug):
     return render(request, "catalog/book_detail.html", {"book": sl})
 
 
-class AuthorListView(generic.ListView):
-    model = 5
-    paginate_by = 5
-
-
 class BookListView(generic.ListView):
     model = Book
     template_name = 'book_list.html'

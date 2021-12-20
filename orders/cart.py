@@ -47,7 +47,7 @@ class Cart(object):
         book_id = str(book.id)
         # your code goes here
         if book_id not in self.cart:
-            self.cart[book_id] = {'quantity': 0, 'price' : str(book.price)}
+            self.cart[book_id] = {'title': str(book.title), 'slug': str(book.slug), 'quantity': 0, 'price' : str(book.price)}
         if update_quantity:
             self.cart[book_id]['quantity'] = quantity
         else:
@@ -78,7 +78,6 @@ class Cart(object):
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
 
-    @property
     def get_total_price(self):
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
 

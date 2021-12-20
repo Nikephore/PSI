@@ -24,12 +24,12 @@
 
          {% if user.is_authenticated %}
             <a class="right active"><strong>{{ user.username }}</strong></a>
-            <a href="{% url 'logout' %}?next={{request.path}}" class="right">Logout</a>
+            <a href="{% url 'logout' %}" class="right">Logout</a>
 
             {% if cart|length > 0 %}
                <a href="{% url 'cart_list' %}" class="right"> Your cart: <strong>300</strong> items, <strong>30.05€</strong></a> <!--Esto es placeholder-->
             {% else %}
-               <a href="{% url 'cart_list' %}" class="right"> Empty cart {cart}€</a>
+               <a href="{% url 'cart_list' %}" class="right"> Empty cart {{ cart.get_total_price }}€</a>
             {% endif %}
             
          {% else %}

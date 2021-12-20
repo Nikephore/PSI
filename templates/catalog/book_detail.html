@@ -26,8 +26,6 @@
 
       <p><strong>Price:</strong> {{ book.price }} €</p>
       <br>
-      <p><strong>Stock:</strong> {{ book.number_copies_stock }}</p>
-      <br>
       {% if user.is_authenticated %}
         <form action="{% url 'cart_add' book.slug %}?next={{request.path}}" method="post">
           {% csrf_token %}
