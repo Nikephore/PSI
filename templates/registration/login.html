@@ -1,41 +1,50 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<div class="pages">
+<div class="book_title">
+  <h1>Log In</h1>
+</div>
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% else %}
-<p>Log In</p>
-{% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
     <p>Your account doesn't have access to this page. To proceed,
     please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
     {% endif %}
 {% endif %}
 
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 
-<div>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
-</div>
-<div>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
-</div>
-
-<div>
-  <input type="submit" value="login" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</div>
+<div class="book_info">
+  <div>
+    <td>{{ form.username.label_tag }}</td><br>
+    <td>{{ form.username }}</td>
+  </div>
+  <br>
+  <div>
+    <td>{{ form.password.label_tag }}</td><br>
+    <td>{{ form.password }}</td>
+  </div>
+  <br>
+  <div>
+    <input class="button button1" type="submit" value="Login" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </div>
 </form>
+  <br>
+  {# Assumes you setup the password_reset view in your URLconf #}
+  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+  <br>
+  {% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+</div>
+</div>
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+
+
 
 {% endblock %}
