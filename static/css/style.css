@@ -1,16 +1,21 @@
 * {
     padding: 0; 
-    margin: 0;   
+    margin: 0;
 }
 
 .pages {
     background-color: rgb(238, 240, 242);
-    padding-bottom: 20px;
+    height: 100vmax;
+}
+
+.background {
+    background-color: rgb(238, 240, 242);
 }
 
 a {
     color: rgb(0, 0, 0);
 }
+
 .navbar {
     overflow: hidden;
     background-color: #333;
@@ -26,7 +31,7 @@ a {
     float: left;
     display: block;
     text-align: center;
-    padding: 14px 20px;
+    padding: 14px 18px;
     text-decoration: none;
 }
 
@@ -35,7 +40,7 @@ a {
     display: block;
     align-content: center;
     text-align: center;
-    padding: 10px 50px;
+    padding: 10px 40px;
     text-decoration: none;
 }
 
@@ -69,7 +74,9 @@ a {
 .body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgb(238, 240, 242);
-    clear: bo;
+    height: 100%;
+    clear: both;
+    margin-bottom: 40px;
 }
 
 .footer {
@@ -79,6 +86,8 @@ a {
     height: 40px;
     padding-top: 10px;
     padding-left: 10px;
+    position: fixed;
+    width:100%;
 }
   
 #book_list li {
@@ -168,9 +177,9 @@ a {
   }
   
   .button1 {
-    background-color: #b92727; /* Green */ 
+    background-color: rgb(162, 153, 158); /* Green */ 
     color: white; 
-    border: 2px solid #b92727;
+    border: 2px solid rgb(162, 153, 158);
   }
   
   .button1:hover {

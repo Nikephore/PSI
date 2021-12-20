@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+   
    {% load static %}
    <head>
       <title>
@@ -26,9 +27,9 @@
             <a href="{% url 'logout' %}?next={{request.path}}" class="right">Logout</a>
 
             {% if cart|length > 0 %}
-               <a href="{% url 'cart_list' %}" class="right"> Your cart: {cart.length} items, €</a>
+               <a href="{% url 'cart_list' %}" class="right"> Your cart: <strong>300</strong> items, <strong>30.05€</strong></a> <!--Esto es placeholder-->
             {% else %}
-               <a href="{% url 'cart_list' %}" class="right"> Empty cart</a>
+               <a href="{% url 'cart_list' %}" class="right"> Empty cart {cart}€</a>
             {% endif %}
             
          {% else %}
@@ -38,17 +39,9 @@
       </div>
       {% endblock %}
 
-      <div class= "body">
-         {% block content %}
-         <!-- main block -->
-      
-         {% endblock %}
-      </div>
-      
-
       {% block pagination %}
       {% if is_paginated %}
-         <div class="pagination center_text pages">
+         <div class="pagination center_text background">
          <span class="page-links">
          {% if page_obj.has_previous %}
             <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}&q={{ result }}">←</a>
@@ -64,12 +57,18 @@
       {% endif %}
       {% endblock %}
 
+      <div class= "body">
+         {% block content %}
+         <!-- main block -->
+      
+         {% endblock %}
+      </div>
+      
       {% block footer %} 
       
       <div class="footer">
          <p>Creado por Luis Miguel Nucifora y Bernardo Andr&eacute;s Zambrano</p>
       </div>
-      
       {% endblock %}
    </body>
 </html>

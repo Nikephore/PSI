@@ -29,13 +29,11 @@
       <p><strong>Stock:</strong> {{ book.number_copies_stock }}</p>
       <br>
       {% if user.is_authenticated %}
-        <form action="{% url 'cart_list' %}" method="post">
+        <form action="{% url 'cart_add' book.slug %}?next={{request.path}}" method="post">
+          {% csrf_token %}
           <button class="button button1" type="submit">Add to Cart </button>
           <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" style="width: 40px;"> 
         </form>
-        
-        
-        
       {% endif %}
       
     </div>
