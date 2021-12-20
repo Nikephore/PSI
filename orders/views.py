@@ -2,11 +2,10 @@ from django.http import request
 from orders.forms import CartAddBookForm, OrderCreateForm
 from django.views import generic
 from orders.tests_services import FIRSTNAME
-from .cart import Cart
+from .cart import Cart 
 from catalog.models import Book
 from django.conf import settings
 from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
 
 
 class BaseCart(generic.ListView):
@@ -23,9 +22,10 @@ def cart_add(request, slug):
     # Procesar el formulario para obtener la unidades y anyadirlas
         form = CartAddBookForm(request.POST)
         if form.is_valid():
-            units = form.cleaned_data.get('quantity')
-            sl = Book.objects.get(slug=slug)
-            cart.add(sl, units)
+            units = int(form.cleaned_data.get('quantity'))
+            item = Book.objects.get(slug=slug)
+            cart.add(item, units)
+        return redirect('cart_list')
     return redirect('cart_list')
 
 def cart_remove(request, slug):
