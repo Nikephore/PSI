@@ -1,0 +1,21 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="pages">
+  <div class="book_title">
+    <h2>Checkout</h2>
+  </div>
+  <br>
+  <div class="book_info">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_ul }}
+      <button type="submit">End checkout</button>
+    </form>
+  </div>
+</div>
+  
+  
+{% endblock %}

@@ -37,13 +37,16 @@ def cart_remove(request, slug):
     return redirect('cart_list')
 
 def order_create(request):
-    print('order create')
+    return render(request, 'orders/checkout.html', context=None)
+
+def order_process(request):
     if request.method == 'POST':
-        print('is post')
         form = OrderCreateForm(request.POST)
+        print(form)
         if form.is_valid():
             print('form is valid')
             form.save()
             return render(request, 'orders/created.html', context=None)
+            
     # Cambiar aqui por lo que sea necesario
     return redirect('cart_list')
