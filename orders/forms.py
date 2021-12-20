@@ -3,7 +3,7 @@ from django import forms
 from orders.models import Order
 
 class CartAddBookForm(forms.Form):
-    quantity = forms.IntegerField(min_value=1, required=True)
+    quantity = forms.TypedChoiceField(choices=[(unit, unit) for unit in range (1, 99)], coerce=int)
     
 class OrderCreateForm(forms.ModelForm):
     first_name = forms.CharField(max_length=50, required=True)

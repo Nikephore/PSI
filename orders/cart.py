@@ -49,9 +49,9 @@ class Cart(object):
         if book_id not in self.cart:
             self.cart[book_id] = {'quantity': 0, 'price' : str(book.price)}
         if update_quantity:
-            self.cart[book_id]['quantity'] = quantity
+            self.cart[book_id]['quantity'] = int(quantity)
         else:
-           self.cart[book_id]['quantity'] += quantity 
+           self.cart[book_id]['quantity'] += int(quantity )
         self.save()
 
     def save(self):
@@ -66,10 +66,10 @@ class Cart(object):
 
     def __iter__(self):
         book_ids = self.cart.keys()
-        books = Book.objects.filter(id__in=book_ids)
+        books = Book.objects.filter(id__in = book_ids)
         for book in books:
             self.cart[str(book.id)]['book'] = book
-    
+        
         for item in self.cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
