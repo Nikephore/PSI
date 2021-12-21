@@ -1,0 +1,36 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="pages">
+  <div class="center_text">
+    <h2>Checkout</h2>
+  </div>
+  <br>
+  
+    <form action="{% url 'order_process' %}" method="post">
+        {% csrf_token %}
+        <div class="formbox">
+        <table>
+            {% for field in form %}
+                {{ field.label_tag }}
+                {% for error in field.errors %}
+                    <small style="color: red">  {{ error }}</small>
+                {% endfor %}<br>
+
+                {{ field }}<br>
+            {% endfor %}
+        </table>
+        </div>  
+        
+        <div class="center_text">
+            <button class="button button1" type="submit">End checkout</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% url 'cart_list' %}">Back</a>
+        </div>
+        
+    </form>
+</div>
+  
+  
+{% endblock %}

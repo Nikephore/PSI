@@ -18,6 +18,9 @@ class BaseCart(generic.ListView):
         cart_list = self.request.session[settings.CART_SESSION_ID]
         return cart_list
 
+def order_created(request):
+    return render(request, "orders/checkout.html", context=None)
+
 def cart_add(request, slug):
     cart = Cart(request)
     if request.method == 'POST':
@@ -47,7 +50,7 @@ def cart_clear(request):
 def order_create(request):
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
-        return render(request, 'orders/checkout.html', context= {'form': form})
+        return render(request, 'orders/checkoutform.html', context= {'form': form})
 
 def order_process(request):      
     fn = request.POST['first_name']
@@ -88,4 +91,4 @@ def order_process(request):
     
     cart.clear()
 
-    return redirect('home')
+    return redirect('order_created')
