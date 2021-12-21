@@ -193,27 +193,57 @@ th, td {
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 8px;
-  }
+}
   
-  .button1 {
-    background-color: rgb(162, 153, 158); /* Green */ 
+.button1 {
+    background-color: rgb(162, 153, 158);
     color: white; 
     border: 2px solid rgb(162, 153, 158);
-  }
+}
   
-  .button1:hover {
+.button1:hover {
     background-color: white;
-    color: black;
-  }
+    color: rgb(162, 153, 158);
+}
+.buttongrey {
+    background-color: rgb(53, 59, 60);
+    color: white; 
+    border: 2px solid rgb(53, 59, 60);
+}
+  
+.buttongrey:hover {
+    background-color: white;
+    color: rgb(53, 59, 60);
+}
 
-  .checkout {
-      padding-top: 30px;
-      padding-left: 50px;
-      display: flex;
-  }
+.checkout {
+    padding-top: 30px;
+    padding-left: 50px;
+    display: flex;
+}
 
-  .shopping {
-      padding-top: 15px;
-      padding-left: 20px;
-  }
+.shopping {
+    padding-top: 15px;
+    padding-left: 20px;
+}
+
+/*************************************/
+
+.formbox {
+    height: 250px;
+    width: 250px;
+    display: inline-block;
+    padding-top: 20px;
+    margin-left: 40%;
+    font-size: 14px;
+    line-height: 30px;
+}
+
+.helptext {
+    color: grey
+}
+
+.errortext {
+    color: red;
+}
   

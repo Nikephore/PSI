@@ -4,16 +4,37 @@
 
 {% block content %}
 <div class="pages">
-  <div class="book_title">
-    <h2>Sign up</h2>
+  <div class="center_text">
+    <h1>Create account</h1>
   </div>
   <br>
-  <div class="book_info">
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Sign Up</button>
-    </form>
+  <div class="formbox">
+  <form method="post">
+    {% csrf_token %}
+
+      <strong>{{ form.first_name.label_tag }}</strong><small class="helptext">  {{ form.first_name.help_text }}</small><br>
+      {{ form.first_name }}<br>
+      <strong>{{ form.last_name.label_tag }}</strong><small class="helptext">  {{ form.last_name.help_text }}</small><br>
+      {{ form.last_name }}<br>
+      <strong>{{ form.username.label_tag }}</strong><br>
+      {{ form.username }}<br>
+      <small class="errortext">{{ form.username.errors }}</small>
+      <strong>{{ form.email.label_tag }}</strong><br>
+      {{ form.email }}<br>
+      <small class="errortext">{{ form.email.errors }}</small>
+      <strong>{{ form.password1.label_tag }}</strong><br>
+      {{ form.password1 }}<br>
+      <small class="errortext">{{ form.password1.errors }}</small>
+      <strong>{{ form.password2.label_tag }}</strong><br>
+      {{ form.password2 }}<br>
+      <small class="errortext">{{ form.password2.errors }}</small>
+
+    <div class="center_text">
+      <button class="button button1" type="submit">Sign Up</button> 
+    </div>
+    <br>
+    <small class="helptext">{{ form.password1.help_text }}</small>
+  </form>
   </div>
 </div>
   

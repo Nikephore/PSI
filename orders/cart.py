@@ -47,7 +47,7 @@ class Cart(object):
         book_id = str(book.id)
         # your code goes here
         if book_id not in self.cart:
-            self.cart[book_id] = {'title': str(book.title), 'slug': str(book.slug), 'quantity': 0, 'price' : str(book.price)}
+            self.cart[book_id] = {'book_id': book_id, 'title': str(book.title), 'slug': str(book.slug), 'quantity': 0, 'price' : str(book.price)}
         if update_quantity:
             self.cart[book_id]['quantity'] = int(quantity)
         else:
@@ -76,6 +76,9 @@ class Cart(object):
             yield item
 
     def __len__(self):
+        return sum(item['quantity'] for item in self.cart.values())
+
+    def get_number_items(self):
         return sum(item['quantity'] for item in self.cart.values())
 
     def get_total_price(self):

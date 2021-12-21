@@ -28,28 +28,32 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <div class="checkout">
+            <p><strong>&nbsp;Total:</strong> {{ cart.get_total_price }}€</p>
+        </div>
+        
+        <div class="checkout">
+            
+            <form action="{% url 'order_create' %}" method="post">
+                {% csrf_token %}
+                <button class="button button1" type="submit">Checkout</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            </form>
+            <form action="{% url 'cart_clear' %}" method="get">
+                {% csrf_token %}
+                <button class="button buttongrey" type="submit">Clear cart</button>
+            </form>
+
+            <div class="shopping">
+                <a href="{% url 'home' %}">Continue Shopping</a>
+            </div>
+        </div>
     {% else %}
-        <div class="book_items">
-            <p>No hay items</p>
+        <div class="book_info">
+            <p>Your cart is empty :(</p>
         </div>
         
     {% endif %}
-
-    
-    <div class="checkout">
-        <p><strong>&nbsp;Total:</strong> {{ cart.get_total_price }}€</p>
-    </div>
-    
-    <div class="checkout">
-        
-        <form action="{% url 'order_create' %}" method="post">
-            {% csrf_token %}
-            <button class="button button1" type="submit">Checkout</button>
-        </form>
-        <div class="shopping">
-            <a href="{% url 'home' %}">Continue Shopping</a>
-        </div>
-    </div>
 
     
 </div>

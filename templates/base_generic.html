@@ -7,7 +7,7 @@
          {% block title %} BookShop {% endblock %}
       </title>
 
-      <link rel="stylesheet"  href="{%  static  'css/style.css'  %}">
+      <link rel="stylesheet"  href="{%  static 'css/style.css' %}">
    </head>
    <body>
       {% block header %} 
@@ -27,9 +27,9 @@
             <a href="{% url 'logout' %}" class="right">Logout</a>
 
             {% if cart|length > 0 %}
-               <a href="{% url 'cart_list' %}" class="right"> Your cart: <strong>300</strong> items, <strong>30.05€</strong></a> <!--Esto es placeholder-->
+               <a href="{% url 'cart_list' %}" class="right"> Your cart: <strong>{{ cart.get_number_items }}</strong> items, <strong>{{ cart.get_total_price }}€</strong></a> <!--Esto es placeholder-->
             {% else %}
-               <a href="{% url 'cart_list' %}" class="right"> Empty cart {{ cart.get_total_price }}€</a>
+               <a href="{% url 'cart_list' %}" class="right"> Empty cart</a>
             {% endif %}
             
          {% else %}
