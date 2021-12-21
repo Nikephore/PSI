@@ -10,3 +10,35 @@ catalog/urls.py                               5      0   100%
 catalog/views.py                             37      4    89%   11-17
 -----------------------------------------------------------------------
 TOTAL                                       186      6    97%
+Name                                                            Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------------------------------
+catalog/admin.py                                                   18      0   100%
+catalog/apps.py                                                     4      0   100%
+catalog/management/commands/populate.py                            92      2    98%   50, 84
+catalog/migrations/0001_initial.py                                  7      0   100%
+catalog/migrations/0002_alter_book_options.py                       4      0   100%
+catalog/migrations/__init__.py                                      0      0   100%
+catalog/models.py                                                  38      2    95%   17, 54
+catalog/urls.py                                                     5      0   100%
+catalog/views.py                                                   34     12    65%   28-44, 48-50, 54-55
+orders/__init__.py                                                  0      0   100%
+orders/admin.py                                                     4      0   100%
+orders/apps.py                                                      4      0   100%
+orders/cart.py                                                     44     11    75%   52, 68-76, 88-89
+orders/context_preprocesors.py                                      3      0   100%
+orders/forms.py                                                    14      0   100%
+orders/migrations/0001_initial.py                                   5      0   100%
+orders/migrations/0002_rename_postalcode_order_postal_code.py       4      0   100%
+orders/migrations/0003_auto_20211124_1305.py                        4      0   100%
+orders/migrations/0004_orderitem.py                                 5      0   100%
+orders/migrations/0005_auto_20211128_1811.py                        4      0   100%
+orders/migrations/0006_remove_orderitem_order.py                    4      0   100%
+orders/migrations/0007_order_items.py                               4      0   100%
+orders/migrations/0008_auto_20211202_1023.py                        5      0   100%
+orders/migrations/0009_alter_orderitem_order.py                     5      0   100%
+orders/migrations/__init__.py                                       0      0   100%
+orders/models.py                                                   27      0   100%
+orders/urls.py                                                      4      0   100%
+orders/views.py                                                    59     23    61%   22, 35, 48-51, 61-99
+---------------------------------------------------------------------------------------------
+TOTAL                                                             401     50    88%
