@@ -1,0 +1,1541 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.9 (Ubuntu 12.9-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 12.9 (Ubuntu 12.9-0ubuntu0.20.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user_groups (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- Name: catalog_author; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.catalog_author (
+    id bigint NOT NULL,
+    first_name character varying(100) NOT NULL,
+    last_name character varying(100) NOT NULL
+);
+
+
+--
+-- Name: catalog_author_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.catalog_author_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: catalog_author_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.catalog_author_id_seq OWNED BY public.catalog_author.id;
+
+
+--
+-- Name: catalog_book; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.catalog_book (
+    path_to_cover_image character varying(100) NOT NULL,
+    id bigint NOT NULL,
+    isbn character varying(13) NOT NULL,
+    title character varying(200) NOT NULL,
+    price numeric(10,2) NOT NULL,
+    number_copies_stock integer NOT NULL,
+    date date,
+    score numeric(4,2) NOT NULL,
+    slug character varying(50) NOT NULL
+);
+
+
+--
+-- Name: catalog_book_author; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.catalog_book_author (
+    id bigint NOT NULL,
+    book_id bigint NOT NULL,
+    author_id bigint NOT NULL
+);
+
+
+--
+-- Name: catalog_book_author_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.catalog_book_author_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: catalog_book_author_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.catalog_book_author_id_seq OWNED BY public.catalog_book_author.id;
+
+
+--
+-- Name: catalog_book_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.catalog_book_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: catalog_book_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.catalog_book_id_seq OWNED BY public.catalog_book.id;
+
+
+--
+-- Name: catalog_comment; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.catalog_comment (
+    id bigint NOT NULL,
+    date timestamp with time zone,
+    msg character varying(500) NOT NULL,
+    book_id bigint,
+    user_id integer
+);
+
+
+--
+-- Name: catalog_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.catalog_comment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: catalog_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.catalog_comment_id_seq OWNED BY public.catalog_comment.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_migrations (
+    id bigint NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: orders_order; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_order (
+    id bigint NOT NULL,
+    first_name character varying(50) NOT NULL,
+    last_name character varying(50) NOT NULL,
+    email character varying(254) NOT NULL,
+    address character varying(300) NOT NULL,
+    postal_code character varying(5) NOT NULL,
+    city character varying(50) NOT NULL,
+    created timestamp with time zone,
+    updated timestamp with time zone,
+    paid boolean
+);
+
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_order_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_order_id_seq OWNED BY public.orders_order.id;
+
+
+--
+-- Name: orders_orderitem; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_orderitem (
+    id bigint NOT NULL,
+    price numeric(10,2) NOT NULL,
+    quantity integer NOT NULL,
+    book_id bigint,
+    order_id bigint
+);
+
+
+--
+-- Name: orders_orderitem_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_orderitem_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_orderitem_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_orderitem_id_seq OWNED BY public.orders_orderitem.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: catalog_author id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_author ALTER COLUMN id SET DEFAULT nextval('public.catalog_author_id_seq'::regclass);
+
+
+--
+-- Name: catalog_book id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_book ALTER COLUMN id SET DEFAULT nextval('public.catalog_book_id_seq'::regclass);
+
+
+--
+-- Name: catalog_book_author id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_book_author ALTER COLUMN id SET DEFAULT nextval('public.catalog_book_author_id_seq'::regclass);
+
+
+--
+-- Name: catalog_comment id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_comment ALTER COLUMN id SET DEFAULT nextval('public.catalog_comment_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: orders_order id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_order ALTER COLUMN id SET DEFAULT nextval('public.orders_order_id_seq'::regclass);
+
+
+--
+-- Name: orders_orderitem id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderitem ALTER COLUMN id SET DEFAULT nextval('public.orders_orderitem_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add user	4	add_user
+14	Can change user	4	change_user
+15	Can delete user	4	delete_user
+16	Can view user	4	view_user
+17	Can add content type	5	add_contenttype
+18	Can change content type	5	change_contenttype
+19	Can delete content type	5	delete_contenttype
+20	Can view content type	5	view_contenttype
+21	Can add session	6	add_session
+22	Can change session	6	change_session
+23	Can delete session	6	delete_session
+24	Can view session	6	view_session
+25	Can add author	7	add_author
+26	Can change author	7	change_author
+27	Can delete author	7	delete_author
+28	Can view author	7	view_author
+29	Can add book	8	add_book
+30	Can change book	8	change_book
+31	Can delete book	8	delete_book
+32	Can view book	8	view_book
+33	Can add comment	9	add_comment
+34	Can change comment	9	change_comment
+35	Can delete comment	9	delete_comment
+36	Can view comment	9	view_comment
+37	Can add order	10	add_order
+38	Can change order	10	change_order
+39	Can delete order	10	delete_order
+40	Can view order	10	view_order
+41	Can add order item	11	add_orderitem
+42	Can change order item	11	change_orderitem
+43	Can delete order item	11	delete_orderitem
+44	Can view order item	11	view_orderitem
+\.
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+2	9fd0aa5ac08100abe795aaebebe67d82d7ebc0fff465ea3ea3a5bf32a1426c1b	\N	f	Patrick Davis	Nancy	Fowler	jordanrachel@example.net	f	t	2021-12-21 20:59:03.358428+01
+3	c96886f10479a5e08be218ea955abe144dd5fae3c3e34e4542d1818788d23bcc	\N	f	Bonnie Snyder	Edward	Morales	whitepamela@example.org	f	t	2021-12-21 20:59:03.369455+01
+4	adb52f0a91c0617d12bfc3bb762315cca67acc82ecce78c612951e1c8c61ba36	\N	f	Isaac Fox	Jeremy	James	edennis@example.org	f	t	2021-12-21 20:59:03.377683+01
+5	fd51842a6829d7334e9e0f8309f1c0a1bd980fe93be3091174c5aa9e39a3a5be	\N	f	Colleen Smith	Lawrence	Newman	christine22@example.com	f	t	2021-12-21 20:59:03.386025+01
+6	564976788e06f7cad6fd267ecdce690581e5d632dbe6dc30e3823a827825ea6a	\N	f	Kevin Beck	Jessica	Cruz	thomas43@example.com	f	t	2021-12-21 20:59:03.394374+01
+7	2475437a880c8fb409bc11f0963e171b741cdd281c1fd386141ede17b8d77c4c	\N	f	Hannah Meyer	Hannah	Rowe	kevinjohnson@example.com	f	t	2021-12-21 20:59:03.402727+01
+8	4b61dca163b6a6c221ea988ea4fec20ace945d1c3cc1eb48447da30f77947cbb	\N	f	Alyssa Lewis	Jessica	Myers	tina16@example.org	f	t	2021-12-21 20:59:03.411046+01
+9	8ce02d4bc6c3ed6b2c268eafaf789f6a7f28a63d02a339f14e7e7294aff0b36f	\N	f	Jacqueline Rodriguez	Kyle	Martinez	carlsonmichele@example.net	f	t	2021-12-21 20:59:03.41954+01
+10	3a59979a5b32732e264d3860c16b405299c15c806e3b586274c752fca9e8a67c	\N	f	Joseph Sims	Tommy	Rodriguez	marynguyen@example.net	f	t	2021-12-21 20:59:03.427721+01
+11	c28b86d39a9c933e04f7fa0b7f08f882fc5c86de0c066c3c3be5c168f1158997	\N	f	Robert Malone	Christopher	Scott	ashleyferrell@example.net	f	t	2021-12-21 20:59:03.436141+01
+12	0f1a66c82ac749df74aee3ac6a85c9402a97178ad059607efc855628f81e4ea4	\N	f	Jordan Mejia	Eric	Ross	ashley33@example.com	f	t	2021-12-21 20:59:03.444481+01
+13	8abf73edb930907eea0fd420364a811312f8ab377be13fbb5684162aff50c88e	\N	f	Michael Jones	Charles	Craig	bbrown@example.com	f	t	2021-12-21 20:59:03.452801+01
+14	e8bdb4d641e301214cc33bd3f7056e3f7520575613feb77d3b48e4c7ee029e0d	\N	f	James Solomon	Alison	Santos	nicole83@example.org	f	t	2021-12-21 20:59:03.461071+01
+15	96c84fcf20eda76e86a2f36f195be7add7c235a2a4e2278cc47dcddd849e98b0	\N	f	Laura Byrd	Haley	Skinner	melissadoyle@example.net	f	t	2021-12-21 20:59:03.469467+01
+16	d4ac3d0e45905b3fb63240949d07c4eb3c8ae25998a6489205cf88342f0d9edc	\N	f	Candice Wagner	Patricia	Fisher	owenyolanda@example.com	f	t	2021-12-21 20:59:03.477925+01
+17	610b62c4c9ae24704d158a421d548ee1ebfbb0272fe88f63eaee82608827427a	\N	f	Melissa Cross	James	Fitzgerald	jenniferlong@example.net	f	t	2021-12-21 20:59:03.486142+01
+18	0e79ecf3afceec67910f551cd19b9699463a0300b16161da4f6b28dca9b2158e	\N	f	Katherine Wong	Michelle	Gonzalez	michelle37@example.org	f	t	2021-12-21 20:59:03.49443+01
+19	197d3f1d9c95507a577a0d2c4e92969314f86fa078059a452a45a913db2e2589	\N	f	Eric Smith	Patty	Hickman	stephaniesmith@example.com	f	t	2021-12-21 20:59:03.502842+01
+20	068203c5971512317bd7245ba0d7261e6f95feaa1528d3b534f48a844b53c587	\N	f	Claire Martinez	Sherry	Jones	stewartscott@example.org	f	t	2021-12-21 20:59:03.511175+01
+21	67037bc06b530afa02389967f0583ffb6ae9e5224262ef842432f94949a06b66	\N	f	Kimberly Cruz	Richard	Williams	haasalexis@example.com	f	t	2021-12-21 20:59:03.519512+01
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: catalog_author; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.catalog_author (id, first_name, last_name) FROM stdin;
+1	Brenda	Knight
+2	Becky	Boyd
+3	Joshua	Jackson
+4	Daniel	Cook
+5	Sherri	Preston
+6	Whitney	Smith
+7	Jill	Frost
+8	Joseph	Bishop
+9	Joseph	Webb
+10	Michelle	Hernandez
+\.
+
+
+--
+-- Data for Name: catalog_book; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.catalog_book (path_to_cover_image, id, isbn, title, price, number_copies_stock, date, score, slug) FROM stdin;
+covers/street-1.png	1	2783457949150	Street	9.49	7579	1982-12-09	6.51	street-1
+covers/despite-2.png	2	8328542367876	Despite	4.27	8387	1971-10-18	8.07	despite-2
+covers/only-17.png	17	0286533952438	Only	3.14	5133	2017-04-04	6.33	only-17
+covers/skill-3.png	3	7508287282530	Skill	5.27	4468	2009-07-25	2.96	skill-3
+covers/some-4.png	4	3233390160999	Some	6.44	4660	1980-04-25	8.77	some-4
+covers/gas-5.png	5	5380687685667	Gas	9.67	1273	1993-01-01	6.86	gas-5
+covers/girl-6.png	6	4644911253672	Girl	8.94	4371	1975-11-10	8.45	girl-6
+covers/risk-18.png	18	8655757089498	Risk	3.12	547	2016-08-16	1.51	risk-18
+covers/worry-7.png	7	8919032677660	Worry	6.36	5508	1979-11-10	1.26	worry-7
+covers/tough-8.png	8	9091170439729	Tough	6.71	8279	1997-08-03	4.54	tough-8
+covers/vote-9.png	9	3660154082691	Vote	4.53	3291	2013-07-07	7.03	vote-9
+covers/defense-29.png	29	9980812700887	Defense	7.98	465	1975-09-26	6.02	defense-29
+covers/anything-10.png	10	6975793356768	Anything	9.32	6694	1973-11-16	2.39	anything-10
+covers/trip-19.png	19	2008601513099	Trip	4.36	350	1984-08-02	4.55	trip-19
+covers/produce-11.png	11	7683903320207	Produce	3.11	3603	2007-05-01	5.18	produce-11
+covers/throw-12.png	12	0216131094187	Throw	3.93	4309	2006-06-22	4.93	throw-12
+covers/move-13.png	13	2879496636749	Move	4.03	3392	2004-09-10	2.30	move-13
+covers/these-14.png	14	4019783406802	These	1.61	8915	1975-02-12	2.93	these-14
+covers/piece-20.png	20	8588241794852	Piece	2.39	7678	2001-09-12	1.90	piece-20
+covers/strategy-15.png	15	1357879920901	Strategy	6.53	4048	1980-09-15	9.86	strategy-15
+covers/hear-16.png	16	2935164697156	Hear	1.14	1776	1990-04-07	1.33	hear-16
+covers/worker-21.png	21	6393186223775	Worker	4.80	6718	2019-02-13	1.10	worker-21
+covers/take-22.png	22	5134951418806	Take	4.04	5616	1998-06-01	6.82	take-22
+covers/point-30.png	30	6981659892436	Point	6.88	4975	1993-01-27	9.98	point-30
+covers/scene-23.png	23	7797084767447	Scene	7.35	2101	2001-05-22	5.05	scene-23
+covers/talk-24.png	24	7432337922245	Talk	6.49	1525	2020-03-30	8.54	talk-24
+covers/class-25.png	25	8969492932668	Class	8.10	6181	2012-05-08	8.55	class-25
+covers/kid-26.png	26	9677354686572	Kid	2.19	5683	2008-01-13	2.81	kid-26
+covers/home-27.png	27	4406230699010	Home	2.82	5296	2009-05-23	6.89	home-27
+covers/above-28.png	28	8338300492584	Above	5.01	4965	2014-05-03	2.16	above-28
+\.
+
+
+--
+-- Data for Name: catalog_book_author; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.catalog_book_author (id, book_id, author_id) FROM stdin;
+1	1	10
+2	2	8
+3	3	9
+4	4	9
+5	5	8
+6	6	8
+7	7	3
+8	8	6
+9	9	10
+10	10	8
+11	11	8
+12	12	6
+13	13	9
+14	14	10
+15	15	3
+16	16	7
+17	17	5
+18	18	10
+19	19	7
+20	20	8
+21	21	5
+22	22	7
+23	23	7
+24	24	9
+25	25	2
+26	26	2
+27	27	7
+28	28	1
+29	29	2
+30	30	5
+\.
+
+
+--
+-- Data for Name: catalog_comment; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.catalog_comment (id, date, msg, book_id, user_id) FROM stdin;
+1	2021-12-21 20:59:05.154456+01	Source dog kind stock the determine. Through plant teach difficult party. Story decade word TV enter contain today. Your maybe the there politics college.	18	6
+2	2021-12-21 20:59:05.162853+01	Life security worker by. Politics win third yourself story.	22	8
+3	2021-12-21 20:59:05.170853+01	Media establish during newspaper. Occur minute easy send name. Step decision test performance yard public.	4	2
+4	2021-12-21 20:59:05.179121+01	Affect like party. Program away factor try beautiful maintain Republican.\nOffice street at resource.\nProbably develop term. Level describe music reveal third for attention too.	17	11
+5	2021-12-21 20:59:05.187465+01	Drop building several. Professor decision whose give approach environment.\nGuess security hot heavy. Institution him meeting. Hundred wait study animal send major.	28	15
+6	2021-12-21 20:59:05.19599+01	Space event travel. Woman central apply small play need the.\nLate first morning board partner company with same. Foot soldier say. Left country almost base down husband become.	4	5
+7	2021-12-21 20:59:05.204291+01	Piece save not letter raise someone who. Send system same tax down hit several. Dog ask third.\nPower imagine nor. As field first.	9	20
+8	2021-12-21 20:59:05.212721+01	Ready international energy out job board. Many thing high suggest wait debate. Blue together group site student hour responsibility provide.	22	20
+9	2021-12-21 20:59:05.220829+01	Half listen strong blue however gun. Mrs station these represent major central system doctor.	27	15
+10	2021-12-21 20:59:05.229705+01	Within recognize Democrat trip. A also really pattern. Respond financial reflect tell account none population admit.	27	11
+11	2021-12-21 20:59:05.237643+01	Trade key affect indicate for person. Carry past born technology up.\nReturn ten hit article. Yard clearly special thousand.	26	6
+12	2021-12-21 20:59:05.246435+01	Room single myself major future television. Development full you computer join number.\nTwo theory on series.\nMother help too voice. Yourself or list go talk. Writer unit rock view visit help.	21	19
+13	2021-12-21 20:59:05.254095+01	Water represent interview character general. Official often tend white mention.\nThus own while relate answer game. Final someone operation form approach group. Against bill leader type reach feeling.	3	21
+14	2021-12-21 20:59:05.262793+01	Popular listen perhaps hand. Audience administration vote the country store.\nImprove school since speech book life. Adult other conference what guy.	5	15
+15	2021-12-21 20:59:05.270795+01	Entire generation act. School necessary order some. East yeah get no write movie much.	24	6
+16	2021-12-21 20:59:05.279101+01	Huge itself character decade indeed detail. Modern fill item fight push health herself. Protect world system pick. Investment street understand phone shoulder left.	5	6
+17	2021-12-21 20:59:05.287343+01	Wall man generation realize choose before. Soldier rather bill huge part. Situation stay ask join information question issue mind.	13	12
+18	2021-12-21 20:59:05.296149+01	Industry green risk college page. Quickly lay two than live ability. North plant identify manager.\nPerhaps scene experience who across. Need sell protect performance memory.	26	10
+19	2021-12-21 20:59:05.304363+01	Fire put sound area way inside. Police force theory short million door off economic. Break exist determine song.\nMean discussion kid list off anything board.\nDefense family his big environment.	6	10
+20	2021-12-21 20:59:05.312684+01	Recently though who seven. Idea together land sister west meeting.\nToday position successful military especially. Officer fast to recognize do personal.	4	2
+21	2021-12-21 20:59:05.320815+01	Land growth number hundred anything program.\nLand may size I financial. Hear list poor policy.	12	11
+22	2021-12-21 20:59:05.329945+01	Law we will. Bag glass he choose note table. American poor sound hand wide.	15	15
+23	2021-12-21 20:59:05.337936+01	Develop without individual huge nothing song. Room federal thing PM.\nSometimes although painting painting smile. Beautiful reduce price point. Dark role center amount much network.	6	18
+24	2021-12-21 20:59:05.346645+01	Civil feeling brother around action. Cover attention nature town.\nDifference decade no drug. Agent water best speech meet movement.\nAmount begin center a. Per together huge idea.	7	15
+25	2021-12-21 20:59:05.353971+01	Whom pick improve subject. Why foot ten hair far. Include pressure forget condition half trade.	23	10
+26	2021-12-21 20:59:05.362957+01	Simple city become line deep in ball kitchen. Happen improve case defense bag inside issue.\nLeft sense point challenge nation. Good try us interesting certainly pick. Likely seat scene fly.	19	7
+27	2021-12-21 20:59:05.371079+01	Choice Republican fund produce some close. Indeed commercial call glass serve.	27	3
+28	2021-12-21 20:59:05.379451+01	Lawyer walk any. Such lead example attention tell forget onto. Their back upon name.	24	4
+29	2021-12-21 20:59:05.387769+01	Reduce standard real as provide. Clear theory tend share.\nRecord within live. Allow sell wind. Plan official run color area three style talk. Light father seek wait less catch.	21	21
+30	2021-12-21 20:59:05.395979+01	Step large allow measure station. Several say medical region space.\nBit building seat discuss some. Find commercial discuss.\nPretty right can. Agreement option like.	1	3
+31	2021-12-21 20:59:05.404346+01	Security moment why yes soon record rather. None out up again attention contain protect.\nCapital million discussion. Time teach him leave agent.	21	7
+32	2021-12-21 20:59:05.412829+01	Close different different article. Seem prove maintain industry occur.\nBy now hour radio focus factor.\nReason team camera throw past force. Site economy off game. Student arrive different.	13	18
+33	2021-12-21 20:59:05.421004+01	Approach military quickly several weight rate beyond.\nKeep bar hair main career. Model tax bar need scene account. Size two structure. Western current attack relate fish behavior understand.	15	3
+34	2021-12-21 20:59:05.429811+01	Same material compare. Everybody according role alone middle scene either would.\nAlso exist subject kid wait understand by.\nModel chance reality manager every land. You fight member suggest us Mrs.	15	3
+35	2021-12-21 20:59:05.437862+01	Study current claim suffer exist. Yourself half seat security Congress affect. Game base plan contain also.\nOil science mind decision enter. Than Congress leader reality task low second.	7	19
+36	2021-12-21 20:59:05.446305+01	Five follow group surface home environmental. Character reflect summer we.	10	3
+37	2021-12-21 20:59:05.45432+01	Result party especially center popular kitchen surface. Develop tonight analysis race example probably price.	1	14
+38	2021-12-21 20:59:05.463519+01	War rate system position. End ground surface design.\nSide along law hundred.\nSome important right return tend return your. Dark despite approach seek him ok though military.	3	6
+39	2021-12-21 20:59:05.471036+01	He anything food attention. Fear political medical movie family why.\nMaterial key believe serious audience call give. Bad organization material plan particular. Thing region year fire seem yard.	11	20
+40	2021-12-21 20:59:05.479898+01	Design political idea easy seem. Owner he natural against lose relate writer. Beat understand fear something again forget heavy child.	13	8
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	catalog	author
+8	catalog	book
+9	catalog	comment
+10	orders	order
+11	orders	orderitem
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2021-12-21 20:58:40.465612+01
+2	auth	0001_initial	2021-12-21 20:58:41.386477+01
+3	admin	0001_initial	2021-12-21 20:58:41.578204+01
+4	admin	0002_logentry_remove_auto_add	2021-12-21 20:58:41.596978+01
+5	admin	0003_logentry_add_action_flag_choices	2021-12-21 20:58:41.61026+01
+6	contenttypes	0002_remove_content_type_name	2021-12-21 20:58:41.637232+01
+7	auth	0002_alter_permission_name_max_length	2021-12-21 20:58:41.65241+01
+8	auth	0003_alter_user_email_max_length	2021-12-21 20:58:41.671409+01
+9	auth	0004_alter_user_username_opts	2021-12-21 20:58:41.68698+01
+10	auth	0005_alter_user_last_login_null	2021-12-21 20:58:41.704538+01
+11	auth	0006_require_contenttypes_0002	2021-12-21 20:58:41.71163+01
+12	auth	0007_alter_validators_add_error_messages	2021-12-21 20:58:41.729591+01
+13	auth	0008_alter_user_username_max_length	2021-12-21 20:58:41.803555+01
+14	auth	0009_alter_user_last_name_max_length	2021-12-21 20:58:41.821399+01
+15	auth	0010_alter_group_name_max_length	2021-12-21 20:58:41.836546+01
+16	auth	0011_update_proxy_permissions	2021-12-21 20:58:41.854101+01
+17	auth	0012_alter_user_first_name_max_length	2021-12-21 20:58:41.871008+01
+18	catalog	0001_initial	2021-12-21 20:58:42.462325+01
+19	orders	0001_initial	2021-12-21 20:58:42.737383+01
+20	sessions	0001_initial	2021-12-21 20:58:42.912454+01
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+\.
+
+
+--
+-- Data for Name: orders_order; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_order (id, first_name, last_name, email, address, postal_code, city, created, updated, paid) FROM stdin;
+\.
+
+
+--
+-- Data for Name: orders_orderitem; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_orderitem (id, price, quantity, book_id, order_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 44, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 21, true);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: catalog_author_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.catalog_author_id_seq', 10, true);
+
+
+--
+-- Name: catalog_book_author_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.catalog_book_author_id_seq', 30, true);
+
+
+--
+-- Name: catalog_book_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.catalog_book_id_seq', 30, true);
+
+
+--
+-- Name: catalog_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.catalog_comment_id_seq', 40, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 11, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 20, true);
+
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_order_id_seq', 1, false);
+
+
+--
+-- Name: orders_orderitem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_orderitem_id_seq', 1, false);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: catalog_author catalog_author_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_author
+    ADD CONSTRAINT catalog_author_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: catalog_book_author catalog_book_author_book_id_author_id_6fa31ecf_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_book_author
+    ADD CONSTRAINT catalog_book_author_book_id_author_id_6fa31ecf_uniq UNIQUE (book_id, author_id);
+
+
+--
+-- Name: catalog_book_author catalog_book_author_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_book_author
+    ADD CONSTRAINT catalog_book_author_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: catalog_book catalog_book_isbn_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_book
+    ADD CONSTRAINT catalog_book_isbn_key UNIQUE (isbn);
+
+
+--
+-- Name: catalog_book catalog_book_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_book
+    ADD CONSTRAINT catalog_book_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: catalog_comment catalog_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_comment
+    ADD CONSTRAINT catalog_comment_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: orders_order orders_order_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_order
+    ADD CONSTRAINT orders_order_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_orderitem orders_orderitem_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderitem
+    ADD CONSTRAINT orders_orderitem_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: catalog_book_author_author_id_7cb75b74; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX catalog_book_author_author_id_7cb75b74 ON public.catalog_book_author USING btree (author_id);
+
+
+--
+-- Name: catalog_book_author_book_id_c16d17b8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX catalog_book_author_book_id_c16d17b8 ON public.catalog_book_author USING btree (book_id);
+
+
+--
+-- Name: catalog_book_isbn_30805834_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX catalog_book_isbn_30805834_like ON public.catalog_book USING btree (isbn varchar_pattern_ops);
+
+
+--
+-- Name: catalog_book_slug_4eebf644; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX catalog_book_slug_4eebf644 ON public.catalog_book USING btree (slug);
+
+
+--
+-- Name: catalog_book_slug_4eebf644_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX catalog_book_slug_4eebf644_like ON public.catalog_book USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: catalog_comment_book_id_d8d57b4b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX catalog_comment_book_id_d8d57b4b ON public.catalog_comment USING btree (book_id);
+
+
+--
+-- Name: catalog_comment_user_id_30926d6e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX catalog_comment_user_id_30926d6e ON public.catalog_comment USING btree (user_id);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: orders_orderitem_book_id_ed013cad; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX orders_orderitem_book_id_ed013cad ON public.orders_orderitem USING btree (book_id);
+
+
+--
+-- Name: orders_orderitem_order_id_fe61a34d; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX orders_orderitem_order_id_fe61a34d ON public.orders_orderitem USING btree (order_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: catalog_book_author catalog_book_author_author_id_7cb75b74_fk_catalog_author_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_book_author
+    ADD CONSTRAINT catalog_book_author_author_id_7cb75b74_fk_catalog_author_id FOREIGN KEY (author_id) REFERENCES public.catalog_author(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: catalog_book_author catalog_book_author_book_id_c16d17b8_fk_catalog_book_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_book_author
+    ADD CONSTRAINT catalog_book_author_book_id_c16d17b8_fk_catalog_book_id FOREIGN KEY (book_id) REFERENCES public.catalog_book(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: catalog_comment catalog_comment_book_id_d8d57b4b_fk_catalog_book_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_comment
+    ADD CONSTRAINT catalog_comment_book_id_d8d57b4b_fk_catalog_book_id FOREIGN KEY (book_id) REFERENCES public.catalog_book(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: catalog_comment catalog_comment_user_id_30926d6e_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.catalog_comment
+    ADD CONSTRAINT catalog_comment_user_id_30926d6e_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: orders_orderitem orders_orderitem_book_id_ed013cad_fk_catalog_book_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderitem
+    ADD CONSTRAINT orders_orderitem_book_id_ed013cad_fk_catalog_book_id FOREIGN KEY (book_id) REFERENCES public.catalog_book(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: orders_orderitem orders_orderitem_order_id_fe61a34d_fk_orders_order_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderitem
+    ADD CONSTRAINT orders_orderitem_order_id_fe61a34d_fk_orders_order_id FOREIGN KEY (order_id) REFERENCES public.orders_order(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
