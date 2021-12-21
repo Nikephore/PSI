@@ -14,7 +14,7 @@ class Author(models.Model):
         return self.first_name + " " + self.last_name
 
     def get_absolute_url(self):
-        return slugify(self.first_name+" "+self.last_name+" "+str(self.pk))
+        return slugify(self.first_name + " " + self.last_name + " " + str(self.pk))
 
 
 class Book(models.Model):
@@ -30,16 +30,15 @@ class Book(models.Model):
 
     class Meta:
         ordering = ['title']
-    
+
     def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):
         # Para permitir titulos de libros repetidos
-        super().save(*args, **kwargs)   
+        super().save(*args, **kwargs)
         self.slug = slugify(self.title + ' ' + str(self.pk))
         super().save(update_fields=['slug'])
-
 
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.slug)])

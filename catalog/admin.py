@@ -28,7 +28,7 @@ class BookAdmin(admin.ModelAdmin):
         'date',
         'score',
         'number_copies_stock'
-        )
+    )
     inLines = [AuthorsInLine]
 
 

@@ -103,19 +103,19 @@ class Command(BaseCommand):
             new_author = Author(first_name=fn, last_name=ln)
             new_author.save()
 
-
-#$cultured: rgba(238, 240, 242, 1);
-#$silver: rgba(198, 199, 196, 1);
-#$spanish-gray: rgba(162, 153, 158, 1);
-#$deep-taupe: rgba(132, 106, 106, 1);
-#$onyx: rgba(53, 59, 60, 1);
+    # PALETA DE COLORES
+    # $cultured: rgba(238, 240, 242, 1);
+    # $silver: rgba(198, 199, 196, 1);
+    # $spanish-gray: rgba(162, 153, 158, 1);
+    # $deep-taupe: rgba(132, 106, 106, 1);
+    # $onyx: rgba(53, 59, 60, 1);
 
     def cover(self, book):
         """create fake cover image.
            This function creates a very basic cover
            that show (partially),
            the primary key, title and author name"""
-        
+
         ran = random.randint(3, 10)
         rotation = random.randint(0, 359)
         img = Image.new('RGB', (200, 300), color=(162, 153, 158))
@@ -134,7 +134,7 @@ class Command(BaseCommand):
             rotation=rotation,
             fill=(162, 153, 158),
             outline=None
-            )
+        )
         d.text((20, 50), book.title[:15], font=fntt, fill=(53, 59, 60))
         d.text((20, 250), "By %s" % str(
             book.author.all()[0])[:30], font=fnta, fill=(53, 59, 60))
@@ -147,11 +147,11 @@ class Command(BaseCommand):
         for _ in range(self.NUMBERBOOKS):
             t = self.faker.unique.word().title()
             isbn = self.faker.unique.numerify("#############")
-            p = float(decimal.Decimal(random.randrange(100, 999))/100)
+            p = float(decimal.Decimal(random.randrange(100, 999)) / 100)
             # ptci = self.faker.unique.path
             c = self.faker.unique.random_int(self.MAXCOPIESSTOCK)
             d = self.faker.date()
-            s = float(decimal.Decimal(random.randrange(100, 999))/100)
+            s = float(decimal.Decimal(random.randrange(100, 999)) / 100)
             sl = t  # al ser solo una palabra no se distingue
             path_string = "cover/" + sl + ".png"
             pth = pathlib.Path(path_string)
