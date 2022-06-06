@@ -1,9 +1,12 @@
+from decimal import Decimal
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Used to generate URLs by reversing the URL patterns
 from django.urls import reverse
 # Requerida para las instancias de libros únicos
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+
 
 
 class Author(models.Model):
@@ -24,7 +27,6 @@ class Book(models.Model):
     path_to_cover_image = models.FilePathField(auto_created=True)
     number_copies_stock = models.IntegerField()
     date = models.DateField(null=True)
-    score = models.DecimalField(max_digits=4, decimal_places=2)
     slug = models.SlugField()
     author = models.ManyToManyField(Author, help_text="Introduzca un autor para este libro")
 
@@ -40,6 +42,15 @@ class Book(models.Model):
         self.slug = slugify(self.title + ' ' + str(self.pk))
         super().save(update_fields=['slug'])
 
+    def get_score(self):
+        ret = 0
+        if self.score.all().length() > 0:
+            for score in self.score.all:
+                ret += Decimal(score.rate)
+            ret = ret / self.score.all().length()
+            return ret
+        return 'None'
+
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.slug)])
 
@@ -52,3 +63,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.msg
+
+class vote(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, related_name='score')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    rate = models.DecimalField(max_digits=4, decimal_places=2, validators=[MaxValueValidator(Decimal('10.00')), MinValueValidator(Decimal('0.00'))])
+
+    def __str__(self):
+        return self.score
