@@ -46,7 +46,7 @@ class Book(models.Model):
     def get_score(self):
         ret = 0
         if self.score.all().length() > 0:
-            for score in self.score.all:
+            for score in self.score.all():
                 ret += Decimal(score.rate)
             ret = ret / self.score.all().length()
             return ret
@@ -73,7 +73,7 @@ class Vote(models.Model):
     def create_rate(self, book, user, rate):
         #Algo asi deberia funcionar
         #Pero hace falta probarlo para saber bien si no se pisan valoraciones
-        Vote.objects.filter(book=book).update_or_create(user=user, defaults={'rate' : rate})
+        Vote.objects.all().update_or_create(book=book, user=user, defaults={'book' : str(book), 'user' : str(user), 'rate' : str(rate)})
 
     def __str__(self):
         return self.score
