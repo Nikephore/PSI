@@ -11,6 +11,7 @@
 import decimal
 import os
 import pathlib
+from sys import breakpointhook
 
 from django.core.management.base import BaseCommand
 from catalog.models import (Author, Book, Comment, Vote)
@@ -167,8 +168,8 @@ class Command(BaseCommand):
                 book = new_book
                 rate = self.faker.random_int(0,10)
 
-                new_vote = Vote(user=user, book=book, rate=rate)
-                new_vote.save()
+                new_vote, created = Vote.create_rate(book=book, user=user,rate=rate)
+                ## Ya no se necesita en principio new_vote.save()
 
 
 
