@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 from decimal import Decimal
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -68,7 +69,7 @@ class Comment(models.Model):
 class Vote(models.Model):
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, related_name='score')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    rate = models.DecimalField(max_digits=4, decimal_places=2, validators=[MaxValueValidator(Decimal('10.00')), MinValueValidator(Decimal('0.00'))])
+    rate = models.IntegerField(max_digits=2, validators=[MaxValueValidator(Decimal('10.00')), MinValueValidator(Decimal('0.00'))])
 
     def create_rate(self, book, user, rate):
         #Algo asi deberia funcionar
@@ -77,3 +78,5 @@ class Vote(models.Model):
 
     def __str__(self):
         return self.score
+
+    
