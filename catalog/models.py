@@ -72,7 +72,7 @@ class Vote(models.Model):
 
     def create_rate(self, book, user, rate):
         #Algo asi deberia funcionar
-        #Pero hace falta probarlo para saber bien si no se pisan valoraciones
+        #Pero hace falta probarlo para saber bien si no se pisan valoraciones 
         Vote.objects.all().update_or_create(book=book, user=user, defaults={'book' : str(book), 'user' : str(user), 'rate' : str(rate)})
 
     def __str__(self):
