@@ -1,6 +1,6 @@
-## Manual de usuario
+# Manual de usuario
 
-### Barra de navegación 
+## Barra de navegación 
 
 En la barra de navegacion tenemos varios enlaces entre los que se encuentran:
 
@@ -20,15 +20,15 @@ En la barra de navegacion tenemos varios enlaces entre los que se encuentran:
 
 Una vez explicado esto pasaremos a explicar las páginas mas relevantes como son: book_detail, cart, checkout.
 
-### Book detail 
+## Book detail 
 
 Esta pantalla se encarga de mostrarnos la información de un libro, asi como permitirnos añadirlo al carrito mediante un campo que va desde el 1 al 99 para elegir la cantidad de unidades que queramos añadir. Si añadimos libros nos lleva a la pagina cart para ver un resumen de lo que llevamos comprado.
 
-### Cart 
+## Cart 
 
 En esta página podemos visualizar el contenido guardado dentro del carrito en forma de tabla, ademas de ver el precio total que tenemos que pagar para comprarlos. Tambien podremos eliminar un producto concreto del carrito o limpiarlo y dejarlo vacio cosa que nos redirecciona a la pantalla principal. Por otro solo se puede acceder a esta pagina si nos hemos autenticado previamente y asi podremos realizar un checkout que pasamos a describir ahora acontinuacion.
 
-### Checkout 
+## Checkout 
 
 Esta pantalla nos muestra un formulario para finalizar la compra en la que tendremos que introducir: 
 - El nombre
