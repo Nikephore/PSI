@@ -4,14 +4,15 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 
 # Create your views here.
-from .models import Book, Author
+from .models import Book, Author, Vote
 
 
 def home(request):
     score_order = Book.objects.all().order_by('-score')[:5]
     date_order = Book.objects.all().order_by('-date')[:5]
+    vote_order = Vote.objects.all().order_by('Poner Condicion')[:5]
 
-    context = {'score_order': score_order, 'date_order': date_order}
+    context = {'score_order': score_order, 'date_order': date_order, 'vote_order': vote_order}
 
     # Renderiza la plantilla HTML home.html con los datos en la variable contexto
     return render(request, 'home.html', context=context)

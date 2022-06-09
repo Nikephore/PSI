@@ -13,7 +13,7 @@ import os
 import pathlib
 
 from django.core.management.base import BaseCommand
-from catalog.models import (Author, Book, Comment)
+from catalog.models import (Author, Book, Comment, Vote)
 from django.contrib.auth.models import User
 from faker import Faker
 from django.utils import timezone
@@ -59,6 +59,7 @@ class Command(BaseCommand):
         self.MAXAUTHORSPERBOOK = 3
         self.NUMBERCOMMENTS = 40
         self.MAXCOPIESSTOCK = 30
+        self.NUMBEROFVOTES = 100
         self.cleanDataBase()   # clean database
         # The faker.Faker() creates and initializes a faker generator,
         self.faker = Faker()
@@ -66,6 +67,7 @@ class Command(BaseCommand):
         self.author()
         self.book()
         self.comment()
+        self.vote()
         # check a variable that is unlikely been set out of heroku
         # as DYNO to decide which font directory should be used.
         # Be aware that your available fonts may be different
@@ -151,15 +153,25 @@ class Command(BaseCommand):
             # ptci = self.faker.unique.path
             c = self.faker.unique.random_int(self.MAXCOPIESSTOCK)
             d = self.faker.date()
-            s = float(decimal.Decimal(random.randrange(100, 999)) / 100)
             sl = t  # al ser solo una palabra no se distingue
             path_string = "cover/" + sl + ".png"
             pth = pathlib.Path(path_string)
-            new_book = Book(isbn=isbn, title=t, price=p, path_to_cover_image=pth, number_copies_stock=c, date=d, score=s, slug=t)
+            new_book = Book(isbn=isbn, title=t, price=p, path_to_cover_image=pth, number_copies_stock=c, date=d, slug=t)
             new_book.save()
             new_book.author.add(Author.objects.order_by("?").first())
             self.cover(new_book)
             new_book.save()
+
+            for _ in range(self.NUMBEROFVOTES):
+                user = User.objects.order_by("").first()
+                book = new_book
+                rate = self.faker.random_int(0,10)
+
+                new_vote = Vote(user=user, book=book, rate=rate)
+                new_vote.save()
+
+
+
 
     def comment(self):
         " Insert comments"
