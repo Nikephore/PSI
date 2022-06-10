@@ -17,7 +17,7 @@
     <li>
       <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
       <div class="book_list_caption">
-        <strong>{{ book.score }}</strong>
+        <strong>{{ book.get_score }}</strong>
       </div>
     </li>
     {% endfor %}
@@ -53,11 +53,11 @@
     <div class="center_text">
       <h2>Most voted</h2>
     </div>  
-    {% for book in date_order %}
+    {% for book in vote_order %}
     <li>
       <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
       <div class="book_list_caption">
-        <strong>{{ book.score }}</strong>
+        <strong>{{ book.get_score }}</strong>
       </div>
     </li>
     {% endfor %}
