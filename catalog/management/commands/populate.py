@@ -11,7 +11,6 @@
 import decimal
 import os
 import pathlib
-from sys import breakpointhook
 
 from django.core.management.base import BaseCommand
 from catalog.models import (Author, Book, Comment, Vote)
@@ -60,7 +59,7 @@ class Command(BaseCommand):
         self.MAXAUTHORSPERBOOK = 3
         self.NUMBERCOMMENTS = 40
         self.MAXCOPIESSTOCK = 30
-        self.NUMBEROFVOTES = 100
+        self.NUMBEROFVOTES = 150
         self.cleanDataBase()   # clean database
         # The faker.Faker() creates and initializes a faker generator,
         self.faker = Faker()
@@ -68,6 +67,7 @@ class Command(BaseCommand):
         self.author()
         self.book()
         self.comment()
+        self.vote()
         # check a variable that is unlikely been set out of heroku
         # as DYNO to decide which font directory should be used.
         # Be aware that your available fonts may be different
@@ -162,18 +162,6 @@ class Command(BaseCommand):
             self.cover(new_book)
             new_book.save()
 
-            user = User.objects.order_by("?").first()
-
-            for _ in range(self.NUMBEROFVOTES):
-                book = new_book
-                rate = self.faker.random_int(0,10)
-
-                new_vote = Vote.create_rate(book=book, user=user,rate=rate)
-                ## Ya no se necesita en principio new_vote.save()
-
-
-
-
     def comment(self):
         " Insert comments"
         # remove pass and ADD CODE HERE
@@ -185,3 +173,13 @@ class Command(BaseCommand):
 
             new_comment = Comment(user=user, book=book, date=date, msg=msg)
             new_comment.save()
+
+    def vote(self):
+
+        for _ in range(self.NUMBEROFVOTES):
+            user = User.objects.order_by("?").first()
+            book = Book.objects.order_by("?").first()
+            rate = self.faker.random_int(0, 10)
+
+            Vote.create_rate(book=book, user=user, rate=rate)
+            # Ya no se necesita en principio new_vote.save()
