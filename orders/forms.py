@@ -7,6 +7,9 @@ class CartAddBookForm(forms.Form):
     quantity = forms.TypedChoiceField(choices=[(unit, unit) for unit in range(1, 99)], coerce=int)
 
 
+class VoteAddToBook(forms.Form):
+    rate = forms.TypedChoiceField(choices=[(unit, unit) for unit in range(1, 99)], coerce=int)
+
 class OrderCreateForm(forms.ModelForm):
     first_name = forms.CharField(max_length=50, required=True)
     last_name = forms.CharField(max_length=50, required=True)
