@@ -27,6 +27,7 @@ class Book(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     path_to_cover_image = models.FilePathField(auto_created=True)
     number_copies_stock = models.IntegerField()
+    score = models.DecimalField(max_digits=4, decimal_places=2, default=0)
     date = models.DateField(null=True)
     slug = models.SlugField()
     author = models.ManyToManyField(Author, help_text="Introduzca un autor para este libro")
@@ -45,15 +46,20 @@ class Book(models.Model):
 
     def get_score(self):
         ret = 0
-        if self.score.all().count() > 0:
-            for score in self.score.all():
+        if self.scores.all().count() > 0:
+            for score in self.scores.all():
                 ret += Decimal(score.rate)
-            ret = ret / Decimal(self.score.all().count())
-            return ret
+            ret = ret / Decimal(self.scores.all().count())
+            return str(ret)
         return 'None'
 
-    def get_number_scores(self):
-        return self.score.all().count()
+    def update_score(self):
+        avrg = self.get_score()
+        if(avrg != 'None'):
+            self.score = Decimal(avrg)
+        else:
+            self.score = 0
+        super().save(update_fields=['score'])
 
     
     def get_absolute_url(self):
@@ -70,7 +76,7 @@ class Comment(models.Model):
         return self.msg
 
 class Vote(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, related_name='score')
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, related_name='scores')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     rate = models.IntegerField()
     ## validators=[MaxValueValidator(int('10')), MinValueValidator(int('0'))]
@@ -84,6 +90,7 @@ class Vote(models.Model):
             v = Vote(book=book, user=user, rate=rate)
             v.save()
             ret = v
+        book.update_score()
         return ret
         
     def __str__(self):
