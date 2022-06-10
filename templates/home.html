@@ -17,7 +17,7 @@
     <li>
       <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
       <div class="book_list_caption">
-        <strong>{{ book.get_score }}</strong>
+        <strong>{{ book.score }}</strong>
       </div>
     </li>
     {% endfor %}
@@ -57,7 +57,7 @@
     <li>
       <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
       <div class="book_list_caption">
-        <strong>{{ book.get_score }}</strong>
+        <strong>{{ book.n_votes }}</strong>
       </div>
     </li>
     {% endfor %}

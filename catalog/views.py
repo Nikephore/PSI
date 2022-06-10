@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.http import HttpResponseRedirect
+
+from orders.forms import VoteAddToBook
 
 # Create your views here.
 from .models import Book, Author, Vote
@@ -60,3 +63,16 @@ class BookListView(generic.ListView):
     model = Book
     template_name = 'book_list.html'
     paginate_by = 9
+
+
+def UserVote(request, slug):
+    vote = Vote(request)
+    if request.method == 'POST':
+        form = VoteAddToBook(request.POST)
+        if form.is_valid():
+            rate = int(form.cleaned_data.get('rate'))
+            user = request.user
+            book = Book.objects.get(slug=slug)
+            vote.create_rate(book, user, rate)
+        return HttpResponseRedirect(request.path_info)
+    return HttpResponseRedirect(request.path_info)
