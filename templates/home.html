@@ -47,12 +47,25 @@
   </ul>
 </div>
 
+{% if vote_order %}
+<div class="center_text">
+  <ul id="book_list">
+    <div class="center_text">
+      <h2>Most voted</h2>
+    </div>  
+    {% for book in date_order %}
+    <li>
+      <a href="{{ book.get_absolute_url }}"><img src = "{% static book.path_to_cover_image %}"></a>
+      <div class="book_list_caption">
+        <strong>{{ book.score }}</strong>
+      </div>
+    </li>
+    {% endfor %}
+  
+  </ul>
+</div>
+
 {% else %}
   <p>There are no books in the library.</p>
 {% endif %}
 {% endblock content %}
-
-<!-- Ejemplo de fichero home.html. 
-Esto es solo un ejemplo para empezar a trabajar, 
-se espera que lo modifiquéis tanto como sea necesario. 
--->
