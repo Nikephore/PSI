@@ -1,13 +1,11 @@
 # pylint: disable=no-member
 from decimal import Decimal
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 # Used to generate URLs by reversing the URL patterns
 from django.urls import reverse
 # Requerida para las instancias de libros únicos
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
-
 
 
 class Author(models.Model):
@@ -61,9 +59,8 @@ class Book(models.Model):
         else:
             self.score = 0
         self.n_votes = self.scores.all().count()
-        super().save(update_fields=['score','n_votes'])
+        super().save(update_fields=['score', 'n_votes'])
 
-    
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.slug)])
 
@@ -77,25 +74,23 @@ class Comment(models.Model):
     def __str__(self):
         return self.msg
 
+
 class Vote(models.Model):
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, related_name='scores')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     rate = models.IntegerField()
-    ## validators=[MaxValueValidator(int('10')), MinValueValidator(int('0'))]
 
     def create_rate(book, user, rate):
-        #Algo asi deberia funcionar
-        #Pero hace falta probarlo para saber bien si no se pisan valoraciones 
+        # Algo asi deberia funcionar
+        # Pero hace falta probarlo para saber bien si no se pisan valoraciones
         if(Vote.objects.all().count() > 0):
-            ret, updated = Vote.objects.all().update_or_create(book=book, user=user, defaults={'rate' : str(rate)})
-        else :
+            ret, updated = Vote.objects.all().update_or_create(book=book, user=user, defaults={'rate': str(rate)})
+        else:
             v = Vote(book=book, user=user, rate=rate)
             v.save()
             ret = v
         book.update_score()
         return ret
-        
+
     def __str__(self):
         return str(self.rate)
-
-    
