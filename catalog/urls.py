@@ -10,5 +10,6 @@ urlpatterns = [
 
 urlpatterns += [
     url(r'^books/$', views.BookListView.as_view(), name='books'),
-    url(r'^search/$', views.Search.as_view(), name='search')
+    url(r'^search/$', views.Search.as_view(), name='search'),
+    path(r'user_vote/<slug:slug>', views.UserVote, name='UserVote')
 ]

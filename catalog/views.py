@@ -73,6 +73,6 @@ def UserVote(request, slug):
             rate = int(form.cleaned_data.get('rate'))
             user = request.user
             book = Book.objects.get(slug=slug)
-            vote.create_rate(book, user, rate)
-        return HttpResponseRedirect(request.path_info)
-    return HttpResponseRedirect(request.path_info)
+            Vote.create_rate(book, user, rate)
+        return redirect('home')
+    return redirect('home')
