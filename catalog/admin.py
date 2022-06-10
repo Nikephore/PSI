@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Author, Book, Comment
+from .models import Author, Book, Comment, Vote
 
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -26,7 +26,6 @@ class BookAdmin(admin.ModelAdmin):
         'isbn',
         'price',
         'date',
-        'score',
         'number_copies_stock'
     )
     inLines = [AuthorsInLine]
@@ -45,4 +44,10 @@ class CommentAdmin(admin.ModelAdmin):
     inLines = [BooksInline]
 
 
+
 admin.site.register(Comment, CommentAdmin)
+
+
+
+
+admin.site.register(Vote)
