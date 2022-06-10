@@ -28,6 +28,7 @@ class Book(models.Model):
     path_to_cover_image = models.FilePathField(auto_created=True)
     number_copies_stock = models.IntegerField()
     score = models.DecimalField(max_digits=4, decimal_places=2, default=0)
+    n_votes = models.IntegerField(default=0)
     date = models.DateField(null=True)
     slug = models.SlugField()
     author = models.ManyToManyField(Author, help_text="Introduzca un autor para este libro")
@@ -59,7 +60,8 @@ class Book(models.Model):
             self.score = Decimal(avrg)
         else:
             self.score = 0
-        super().save(update_fields=['score'])
+        self.n_votes = self.scores.all().count()
+        super().save(update_fields=['score','n_votes'])
 
     
     def get_absolute_url(self):
