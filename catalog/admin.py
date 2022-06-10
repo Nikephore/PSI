@@ -44,11 +44,6 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('msg', 'date')
     inLines = [BooksInline]
 
-
-
 admin.site.register(Comment, CommentAdmin)
-
-
-
 
 admin.site.register(Vote)
