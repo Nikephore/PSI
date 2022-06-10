@@ -71,7 +71,7 @@ class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     rate = models.IntegerField(max_digits=2, validators=[MaxValueValidator(Decimal('10.00')), MinValueValidator(Decimal('0.00'))])
 
-    def create_rate(self, book, user, rate):
+    def create_rate(book, user, rate):
         #Algo asi deberia funcionar
         #Pero hace falta probarlo para saber bien si no se pisan valoraciones 
         Vote.objects.all().update_or_create(book=book, user=user, defaults={'book' : str(book), 'user' : str(user), 'rate' : str(rate)})

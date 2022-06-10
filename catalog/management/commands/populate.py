@@ -68,7 +68,6 @@ class Command(BaseCommand):
         self.author()
         self.book()
         self.comment()
-        self.vote()
         # check a variable that is unlikely been set out of heroku
         # as DYNO to decide which font directory should be used.
         # Be aware that your available fonts may be different
@@ -163,12 +162,13 @@ class Command(BaseCommand):
             self.cover(new_book)
             new_book.save()
 
+            user = User.objects.order_by("?").first()
+
             for _ in range(self.NUMBEROFVOTES):
-                user = User.objects.order_by("").first()
                 book = new_book
                 rate = self.faker.random_int(0,10)
 
-                new_vote, created = Vote.create_rate(book=book, user=user,rate=rate)
+                new_vote = Vote.create_rate(book=book, user=user,rate=rate)
                 ## Ya no se necesita en principio new_vote.save()
 
 
