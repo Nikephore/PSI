@@ -33,9 +33,10 @@
           <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" style="width: 40px;"> 
         </form>
 
-        <form action="" method="post">
+        <form action="{% url 'UserVote' book.slug %}?next={{request.path}}" method="post">
+          {% csrf_token %}
           <button class="button button1" type="submit">Vote</button>
-          <input type="number" id="rate" name="rate" min="1" max="10" value="1" style="width: 40px;">
+          <input type="number" id="rate" name="rate" min="0" max="10" value="0" style="width: 40px;">
         </form>
 
       {% endif %}
