@@ -13,9 +13,9 @@ from .models import Book, Author, Vote
 def home(request):
     score_order = Book.objects.all().order_by('-score')[:5]
     date_order = Book.objects.all().order_by('-date')[:5]
-    
+    vote_order = Book.objects.all().order_by('n_votes')[:5]
 
-    context = {'score_order': score_order, 'date_order': date_order }
+    context = {'score_order': score_order, 'date_order': date_order, 'vote_order': vote_order}
 
     # Renderiza la plantilla HTML home.html con los datos en la variable contexto
     return render(request, 'home.html', context=context)
