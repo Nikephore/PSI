@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 
-from orders.forms import VoteAddToBook
+from catalog.forms import VoteAddToBook
 
 # Create your views here.
 from .models import Book, Author, Vote
