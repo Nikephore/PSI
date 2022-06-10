@@ -26,6 +26,7 @@ class BookAdmin(admin.ModelAdmin):
         'isbn',
         'price',
         'date',
+        'score',
         'number_copies_stock'
     )
     inLines = [AuthorsInLine]

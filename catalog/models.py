@@ -51,7 +51,7 @@ class Book(models.Model):
             for score in self.scores.all():
                 ret += Decimal(score.rate)
             ret = ret / Decimal(self.scores.all().count())
-            return str(ret)
+            return str(round(ret, 2))
         return 'None'
 
     def update_score(self):
