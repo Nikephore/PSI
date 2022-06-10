@@ -7,7 +7,6 @@ from django.urls import reverse
 # Requerida para las instancias de libros únicos
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
-from kiwisolver import Constraint
 
 
 
@@ -46,10 +45,10 @@ class Book(models.Model):
 
     def get_score(self):
         ret = 0
-        if self.score.all().length() > 0:
+        if self.score.all().count() > 0:
             for score in self.score.all():
                 ret += Decimal(score.rate)
-            ret = ret / self.score.all().length()
+            ret = ret / Decimal(self.score.all().count())
             return ret
         return 'None'
 
@@ -69,14 +68,21 @@ class Comment(models.Model):
 class Vote(models.Model):
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, null=True, related_name='score')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    rate = models.IntegerField(max_digits=2, validators=[MaxValueValidator(Decimal('10.00')), MinValueValidator(Decimal('0.00'))])
+    rate = models.IntegerField()
+    ## validators=[MaxValueValidator(int('10')), MinValueValidator(int('0'))]
 
     def create_rate(book, user, rate):
         #Algo asi deberia funcionar
         #Pero hace falta probarlo para saber bien si no se pisan valoraciones 
-        Vote.objects.all().update_or_create(book=book, user=user, defaults={'book' : str(book), 'user' : str(user), 'rate' : str(rate)})
-
+        if(Vote.objects.all().count() > 0):
+            ret, updated = Vote.objects.all().update_or_create(book=book, user=user, defaults={'rate' : str(rate)})
+        else :
+            v = Vote(book=book, user=user, rate=rate)
+            v.save()
+            ret = v
+        return ret
+        
     def __str__(self):
-        return self.score
+        return str(self.rate)
 
     
